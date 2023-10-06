@@ -517,6 +517,15 @@ class Eluna_PlayerScript : public PlayerScript
 public:
     Eluna_PlayerScript() : PlayerScript("Eluna_PlayerScript") { }
 
+    bool OnBeforePlayerResurrect(Player* player, float /*restore_percent*/, bool /*applySickness*/) override
+    {
+        ELUNA_LOG_DEBUG("[eluna]: Eluna_PlayerScript::OnBeforePlayerResurrect");
+        //call the lua hook onBeforeResurrect
+        bool ret = sEluna->OnBeforeResurrect(player);
+        ELUNA_LOG_DEBUG("[eluna]: Eluna_PlayerScript::OnBeforePlayerResurrect: {} ", ret ? "true" : "false");
+        return ret;
+    }
+
     void OnPlayerResurrect(Player* player, float /*restore_percent*/, bool /*applySickness*/) override
     {
         sEluna->OnResurrect(player);

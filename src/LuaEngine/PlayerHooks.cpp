@@ -93,6 +93,19 @@ void Eluna::OnRepop(Player* pPlayer)
     CallAllFunctions(PlayerEventBindings, key);
 }
 
+//onBeforeResurrect
+bool Eluna::OnBeforeResurrect(Player* pPlayer)
+{
+    ELUNA_LOG_DEBUG("[eluna]: PLAYER_EVENT_BEFORE_RESURRECT before START_HOOK_WITH_RETVAL");
+    START_HOOK_WITH_RETVAL(PLAYER_EVENT_BEFORE_RESURRECT, true);
+    ELUNA_LOG_DEBUG("[eluna]: PLAYER_EVENT_BEFORE_RESURRECT after START_HOOK_WITH_RETVAL");
+    Push(pPlayer);
+    bool ret = CallAllFunctionsBool(PlayerEventBindings, key, true);
+    ELUNA_LOG_DEBUG("[eluna]: PLAYER_EVENT_BEFORE_RESURRECT after CallAllFunctionsBool");
+    ELUNA_LOG_DEBUG("[eluna]: PLAYER_EVENT_BEFORE_RESURRECT ret: {}", ret ? "true":"false");
+    return ret;
+}
+
 void Eluna::OnResurrect(Player* pPlayer)
 {
     START_HOOK(PLAYER_EVENT_ON_RESURRECT);

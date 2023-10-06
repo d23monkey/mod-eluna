@@ -365,6 +365,7 @@ public:
     void OnFirstLogin(Player* pPlayer);
     void OnEquip(Player* pPlayer, Item* pItem, uint8 bag, uint8 slot);
     void OnRepop(Player* pPlayer);
+    bool OnBeforeResurrect(Player* pPlayer);
     void OnResurrect(Player* pPlayer);
     void OnQuestAbandon(Player* pPlayer, uint32 questId);
     void OnLearnTalents(Player* pPlayer, uint32 talentId, uint32 talentRank, uint32 spellid);
