@@ -2680,7 +2680,7 @@ namespace LuaPlayer
     {
         int32 slot = Eluna::CHECKVAL<int32>(L, 2);
 
-        if (slot >= EQUIPMENT_SLOT_START && slot < EQUIPMENT_SLOT_END)
+        if (slot >= static_cast<int32>(EQUIPMENT_SLOT_START) && slot < static_cast<int32>(EQUIPMENT_SLOT_END))
             player->DurabilityPointLossForEquipSlot((EquipmentSlots)slot);
         return 0;
     }
@@ -3872,8 +3872,11 @@ namespace LuaPlayer
     {
         float percent = Eluna::CHECKVAL<float>(L, 2, 100.0f);
         bool sickness = Eluna::CHECKVAL<bool>(L, 3, false);
-        player->ResurrectPlayer(percent, sickness);
-        player->SpawnCorpseBones();
+        bool success = player->ResurrectPlayer(percent, sickness);
+        if(success)
+            player->SpawnCorpseBones();
+        
+        Eluna::Push(L, success);
         return 0;
     }
 
