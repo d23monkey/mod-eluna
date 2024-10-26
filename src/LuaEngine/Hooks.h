@@ -221,6 +221,8 @@ namespace Hooks
         PLAYER_EVENT_ON_BG_DESERTION            =     57,       // (event, player, type)
         PLAYER_EVENT_BEFORE_RESURRECT           =     58,       // (event, player)
         
+        PLAYER_EVENT_ON_PET_KILL                =     59,       // (event, player, killer)
+
         PLAYER_EVENT_COUNT
     };
 

@@ -7,7 +7,9 @@
 #ifndef PLAYERMETHODS_H
 #define PLAYERMETHODS_H
 
+#include "Chat.h"
 #include "GameTime.h"
+#include "GossipDef.h"
 
 /***
  * Inherits all methods from: [Object], [WorldObject], [Unit]
@@ -404,6 +406,50 @@ namespace LuaPlayer
         return 1;
     }
 #endif
+
+    /**
+     * Returns `true` if the [Player] has a Tank Specialization, `false` otherwise.
+     *
+     * @return bool HasTankSpec
+     */
+    int HasTankSpec(lua_State* L, Player* player)
+    {
+        Eluna::Push(L, player->HasTankSpec());
+        return 1;
+    }
+    
+    /**
+     * Returns `true` if the [Player] has a Melee Specialization, `false` otherwise.
+     *
+     * @return bool HasMeleeSpec
+     */
+    int HasMeleeSpec(lua_State* L, Player* player)
+    {
+        Eluna::Push(L, player->HasMeleeSpec());
+        return 1;
+    }
+    
+    /**
+     * Returns `true` if the [Player] has a Caster Specialization, `false` otherwise.
+     *
+     * @return bool HasCasterSpec
+     */
+    int HasCasterSpec(lua_State* L, Player* player)
+    {
+        Eluna::Push(L, player->HasCasterSpec());
+        return 1;
+    }
+    
+    /**
+     * Returns `true` if the [Player] has a Heal Specialization, `false` otherwise.
+     *
+     * @return bool HasHealSpec
+     */
+    int HasHealSpec(lua_State* L, Player* player)
+    {
+        Eluna::Push(L, player->HasHealSpec());
+        return 1;
+    }
 
     /**
      * Returns `true` if the [Player] is in a [Group], `false` otherwise.
@@ -857,6 +903,51 @@ namespace LuaPlayer
     int GetPhaseMaskForSpawn(lua_State* L, Player* player)
     {
         Eluna::Push(L, player->GetPhaseMaskForSpawn());
+        return 1;
+    }
+
+    /**
+     * Returns the [Player]s current amount of Achievement Points
+     *
+     * @return uint32 achievementPoints
+     */
+    int GetAchievementPoints(lua_State* L, Player* player)
+    {
+        uint32 count = 0;
+        const CompletedAchievementMap& completedAchievements = player->GetAchievementMgr()->GetCompletedAchievements();
+        for (auto& pair : completedAchievements)
+        {
+            AchievementEntry const* achievement = sAchievementStore.LookupEntry(pair.first);
+            if (achievement)
+            {
+                count += achievement->points;
+            }
+        }
+
+        Eluna::Push(L, count);
+        return 1;
+    }
+
+    /**
+     * Returns the [Player]s current amount of Achievements Completed
+     *
+     * @return uint32 achievementsCount
+     */
+    int GetCompletedAchievementsCount(lua_State* L, Player* player)
+    {
+        uint32 count = 0;
+        bool countFeatsOfStrength = Eluna::CHECKVAL<bool>(L, 2, false);
+        const CompletedAchievementMap& completedAchievements = player->GetAchievementMgr()->GetCompletedAchievements();
+        for (auto& pair : completedAchievements)
+        {
+            AchievementEntry const* achievement = sAchievementStore.LookupEntry(pair.first);
+            if (achievement && (achievement->categoryId != 81 || countFeatsOfStrength))
+            {               
+                    count++;             
+            }
+        }
+
+        Eluna::Push(L, count);
         return 1;
     }
 #endif
@@ -1684,6 +1775,19 @@ namespace LuaPlayer
         if (AccountMgr::GetName(player->GetSession()->GetAccountId(), accName))
 #endif
             Eluna::Push(L, accName);
+        return 1;
+    }
+
+    /**
+     * Returns the [Player]s completed quest count
+     *
+     * @return int32 questcount
+     */
+    int GetCompletedQuestsCount(lua_State* L, Player* player)
+    {
+        uint32 count = player->GetRewardedQuestCount();
+
+        Eluna::Push(L, count);
         return 1;
     }
 
@@ -3700,7 +3804,7 @@ namespace LuaPlayer
     {
         std::string msg = Eluna::CHECKVAL<std::string>(L, 2);
         if (msg.length() > 0)
-            player->GetSession()->SendNotification("%s", msg.c_str());
+            ChatHandler(player->GetSession()).SendNotification("{}", msg);
         return 0;
     }
 
@@ -3833,6 +3937,25 @@ namespace LuaPlayer
 #endif
         return 0;
     }
+    /**
+    * Run a chat command as if the player typed it into the chat
+    *
+    * @param string command: text to display in chat or console
+    */
+    int RunCommand(lua_State* L, Player* player)
+    {
+        auto command = Eluna::CHECKVAL<std::string>(L, 2);
+
+        // In _ParseCommands which is used below no leading . or ! is allowed for the command string.
+        if (command[0] == '.' || command[0] == '!') {
+            command = command.substr(1);
+        }
+
+        auto handler = ChatHandler(player->GetSession());
+        handler._ParseCommands(command);
+
+        return 0;
+    }
 
     /**
     * Adds a glyph specified by `glyphId` to the [Player]'s current talent specialization into the slot with the index `slotIndex`
@@ -3849,6 +3972,18 @@ namespace LuaPlayer
         player->SendTalentsInfoData(false); // Also handles GlyphData
 
         return 0;
+    }
+
+    /**
+    * Get glyphId of the glyph slot specified by `slotIndex` off the [Player]'s current talent specialization.`
+    * @param uint32 slotIndex
+    * @return glyphId of the glyph in the selected glyph slot or 0 in case the glyph slot is empty
+    */
+    int GetGlyph(lua_State* L, Player* player)
+    {
+        auto slotIndex = Eluna::CHECKVAL<uint32>(L, 2);
+        Eluna::Push(L,player->GetGlyph(slotIndex));
+        return 1;
     }
 
 #if !defined(CLASSIC)
@@ -3908,7 +4043,15 @@ namespace LuaPlayer
         const char* _promptMsg = Eluna::CHECKVAL<const char*>(L, 7, "");
         uint32 _money = Eluna::CHECKVAL<uint32>(L, 8, 0);
 #if defined TRINITY || AZEROTHCORE
-        player->PlayerTalkClass->GetGossipMenu().AddMenuItem(-1, _icon, msg, _sender, _intid, _promptMsg, _money, _code);
+        if (player->PlayerTalkClass->GetGossipMenu().GetMenuItemCount() < GOSSIP_MAX_MENU_ITEMS)
+        {
+            player->PlayerTalkClass->GetGossipMenu().AddMenuItem(-1, _icon, msg, _sender, _intid, _promptMsg, _money,
+                                                                 _code);
+        }
+        else
+        {
+            return luaL_error(L, "GossipMenuItem not added. Reached Max amount of possible GossipMenuItems in this GossipMenu");
+        }
 #else
 #ifndef CLASSIC
         player->PlayerTalkClass->GetGossipMenu().AddMenuItem(_icon, msg, _sender, _intid, _promptMsg, _money, _code);
@@ -4268,6 +4411,21 @@ namespace LuaPlayer
     {
         Eluna::Push(L, player->GetTrader());
         return 1;
+    }
+
+    /**
+     * The [Player] sets the spell power
+     *
+     * @param int value : The spell power value to set
+     * @param bool apply = false : Whether the spell power should be applied or removed
+     */
+    int SetSpellPower(lua_State* L, Player* player)
+    {
+        int value  = Eluna::CHECKVAL<int>(L, 2);
+        bool apply = Eluna::CHECKVAL<bool>(L, 3, false);
+
+        player->ApplySpellPowerBonus(value, apply);
+        return 0;
     }
 
     /*int BindToInstance(lua_State* L, Player* player)
