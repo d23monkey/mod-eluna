@@ -59,7 +59,7 @@ namespace LuaCreature
      */
     int IsReputationGainDisabled(lua_State* L, Creature* creature)
     {
-        Eluna::Push(L, creature->IsReputationGainDisabled());
+        Eluna::Push(L, creature->IsReputationRewardDisabled());
         return 1;
     }
 
