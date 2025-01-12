@@ -185,6 +185,7 @@ ItemGossipBindings(NULL),
 PlayerGossipBindings(NULL),
 MapEventBindings(NULL),
 InstanceEventBindings(NULL),
+SpellEventBindings(NULL),
 
 CreatureUniqueBindings(NULL)
 {
@@ -283,6 +284,7 @@ void Eluna::CreateBindStores()
     PlayerGossipBindings     = new BindingMap< EntryKey<Hooks::GossipEvents> >(L);
     MapEventBindings         = new BindingMap< EntryKey<Hooks::InstanceEvents> >(L);
     InstanceEventBindings    = new BindingMap< EntryKey<Hooks::InstanceEvents> >(L);
+    SpellEventBindings       = new BindingMap< EntryKey<Hooks::SpellEvents> >(L);
 
     CreatureUniqueBindings   = new BindingMap< UniqueObjectKey<Hooks::CreatureEvents> >(L);
 }
@@ -306,6 +308,7 @@ void Eluna::DestroyBindStores()
     delete BGEventBindings;
     delete MapEventBindings;
     delete InstanceEventBindings;
+    delete SpellEventBindings;
 
     delete CreatureUniqueBindings;
 
@@ -326,6 +329,7 @@ void Eluna::DestroyBindStores()
     BGEventBindings = NULL;
     MapEventBindings = NULL;
     InstanceEventBindings = NULL;
+    SpellEventBindings = NULL;
 
     CreatureUniqueBindings = NULL;
 }
@@ -1192,6 +1196,22 @@ int Eluna::Register(lua_State* L, uint8 regtype, uint32 entry, ObjectGuid guid, 
                 auto key = EntryKey<Hooks::InstanceEvents>((Hooks::InstanceEvents)event_id, entry);
                 bindingID = InstanceEventBindings->Insert(key, functionRef, shots);
                 createCancelCallback(L, bindingID, InstanceEventBindings);
+                return 1; // Stack: callback
+            }
+            break;
+        case Hooks::REGTYPE_SPELL:
+            if (event_id < Hooks::SPELL_EVENT_COUNT)
+            {
+                if (!sSpellMgr->GetSpellInfo(entry))
+                {
+                    luaL_unref(L, LUA_REGISTRYINDEX, functionRef);
+                    luaL_error(L, "Couldn't find a spell with (ID: %d)!", entry);
+                    return 0; // Stack: (empty)
+                }
+
+                auto key = EntryKey<Hooks::SpellEvents>((Hooks::SpellEvents)event_id, entry);
+                bindingID = SpellEventBindings->Insert(key, functionRef, shots);
+                createCancelCallback(L, bindingID, SpellEventBindings);
                 return 1; // Stack: callback
             }
             break;
