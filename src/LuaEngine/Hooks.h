@@ -86,7 +86,7 @@ namespace Hooks
         REGTYPE_BG,
         REGTYPE_MAP,
         REGTYPE_INSTANCE,
-         REGTYPE_SPELL,
+        REGTYPE_SPELL,
         REGTYPE_COUNT
     };
 
