@@ -1367,7 +1367,7 @@ namespace LuaGlobalFunctions
 
         int numArgs = lua_gettop(L);
         if (numArgs > 1)
-            query = Forge::FormatQuery(L, query).c_str();
+            query = Eluna::FormatQuery(L, query).c_str();
 
 #if defined TRINITY || AZEROTHCORE
         ElunaQuery result = WorldDatabase.Query(query);
@@ -1428,7 +1428,7 @@ namespace LuaGlobalFunctions
 
         int numArgs = lua_gettop(L);
         if (numArgs > 1)
-            query = Forge::FormatQuery(L, query).c_str();
+            query = Eluna::FormatQuery(L, query).c_str();
 
         WorldDatabase.Execute(query);
         return 0;
@@ -1452,7 +1452,7 @@ namespace LuaGlobalFunctions
 
         int numArgs = lua_gettop(L);
         if (numArgs > 1)
-            query = Forge::FormatQuery(L, query).c_str();
+            query = Eluna::FormatQuery(L, query).c_str();
 
 #if defined TRINITY || AZEROTHCORE
         QueryResult result = CharacterDatabase.Query(query);
@@ -1506,7 +1506,7 @@ namespace LuaGlobalFunctions
 
         int numArgs = lua_gettop(L);
         if (numArgs > 1)
-            query = Forge::FormatQuery(L, query).c_str();
+            query = Eluna::FormatQuery(L, query).c_str();
 
         CharacterDatabase.Execute(query);
         return 0;
@@ -1530,7 +1530,7 @@ namespace LuaGlobalFunctions
 
         int numArgs = lua_gettop(L);
         if (numArgs > 1)
-            query = Forge::FormatQuery(L, query).c_str();
+            query = Eluna::FormatQuery(L, query).c_str();
 
 #if defined TRINITY || AZEROTHCORE
         QueryResult result = LoginDatabase.Query(query);
@@ -1584,7 +1584,7 @@ namespace LuaGlobalFunctions
 
         int numArgs = lua_gettop(L);
         if (numArgs > 1)
-            query = Forge::FormatQuery(L, query).c_str();
+            query = Eluna::FormatQuery(L, query).c_str();
 
         LoginDatabase.Execute(query);
         return 0;

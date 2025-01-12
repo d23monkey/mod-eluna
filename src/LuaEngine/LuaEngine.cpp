@@ -808,7 +808,7 @@ std::string Eluna::FormatQuery(lua_State* L, const char* query)
         {
             break;
         }
-        formattedQuery.replace(position, 2, arg);
+        formattedQuery.replace(position, 1, arg);
         position += arg.length();
     }
 
