@@ -352,6 +352,8 @@ public:
     }
     static ElunaObject* CHECKTYPE(lua_State* luastate, int narg, const char *tname, bool error = true);
 
+    static std::string FormatQuery(lua_State* L, const char* query);
+
     CreatureAI* GetAI(Creature* creature);
     InstanceData* GetInstanceData(Map* map);
     void FreeInstanceId(uint32 instanceId);

@@ -1365,6 +1365,10 @@ namespace LuaGlobalFunctions
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
 
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Forge::FormatQuery(L, query).c_str();
+
 #if defined TRINITY || AZEROTHCORE
         ElunaQuery result = WorldDatabase.Query(query);
         if (result)
@@ -1421,6 +1425,11 @@ namespace LuaGlobalFunctions
     int WorldDBExecute(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Forge::FormatQuery(L, query).c_str();
+
         WorldDatabase.Execute(query);
         return 0;
     }
@@ -1440,6 +1449,10 @@ namespace LuaGlobalFunctions
     int CharDBQuery(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Forge::FormatQuery(L, query).c_str();
 
 #if defined TRINITY || AZEROTHCORE
         QueryResult result = CharacterDatabase.Query(query);
@@ -1490,6 +1503,11 @@ namespace LuaGlobalFunctions
     int CharDBExecute(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Forge::FormatQuery(L, query).c_str();
+
         CharacterDatabase.Execute(query);
         return 0;
     }
@@ -1509,6 +1527,10 @@ namespace LuaGlobalFunctions
     int AuthDBQuery(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Forge::FormatQuery(L, query).c_str();
 
 #if defined TRINITY || AZEROTHCORE
         QueryResult result = LoginDatabase.Query(query);
@@ -1559,6 +1581,11 @@ namespace LuaGlobalFunctions
     int AuthDBExecute(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Forge::FormatQuery(L, query).c_str();
+
         LoginDatabase.Execute(query);
         return 0;
     }
