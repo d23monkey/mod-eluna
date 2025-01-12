@@ -803,7 +803,7 @@ std::string Eluna::FormatQuery(lua_State* L, const char* query)
     size_t position = 0;
     for (const auto& arg : args) 
     {
-        position = formattedQuery.find("%", position);
+        position = formattedQuery.find("?", position);
         if (position == std::string::npos) 
         {
             break;
