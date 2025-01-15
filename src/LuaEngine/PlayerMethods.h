@@ -2765,16 +2765,20 @@ namespace LuaPlayer
         uint32 entry = Eluna::CHECKVAL<uint32>(L, 2);
 
         Quest const* quest = eObjectMgr->GetQuestTemplate(entry);
-
         if (!quest)
             return 0;
 
+        // check item starting quest (it can work incorrectly if added without item in inventory)
         ItemTemplateContainer const* itc = sObjectMgr->GetItemTemplateStore();
         ItemTemplateContainer::const_iterator result = find_if(itc->begin(), itc->end(), Finder<uint32, ItemTemplate>(entry, &ItemTemplate::StartQuest));
 
         if (result != itc->end())
             return 0;
-        
+
+        // ok, normal (creature/GO starting) quest
+        if (player->CanAddQuest(quest, true))
+            player->AddQuestAndCheckCompletion(quest, NULL);
+
         return 0;
     }
 
