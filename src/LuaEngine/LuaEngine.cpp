@@ -782,6 +782,11 @@ void Eluna::Push(lua_State* luastate, GemPropertiesEntry const& gemProperties)
     Push(luastate, &gemProperties);
 }
 
+void Eluna::Push(lua_State* luastate, SpellEntry const& spell)
+{
+    Push(luastate, &spell);
+}
+
 static int CheckIntegerRange(lua_State* luastate, int narg, int min, int max)
 {
     double value = luaL_checknumber(luastate, narg);

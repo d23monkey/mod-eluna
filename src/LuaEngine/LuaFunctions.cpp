@@ -43,6 +43,8 @@ extern "C"
 
 // DBCStores
 #include "GemPropertiesMethods.h"
+#include "GemPropertiesEntryMethods.h"
+#include "SpellEntryMethods.h"
 
 ElunaRegister<Object> ObjectMethods[] =
 {
@@ -1450,6 +1452,9 @@ void RegisterFunctions(Eluna* E)
     
     ElunaTemplate<GemPropertiesEntry>::Register(E, "GemProperties");
     ElunaTemplate<GemPropertiesEntry>::SetMethods(E, LuaGemProperties::GemPropertiesMethods);
+
+    ElunaTemplate<SpellEntry>::Register(E, "SpellEntry");
+    ElunaTemplate<SpellEntry>::SetMethods(E, LuaSpellEntry::SpellEntryMethods);
 
     ElunaTemplate<long long>::Register(E, "long long", true);
 
