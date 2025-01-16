@@ -42,7 +42,6 @@ extern "C"
 #include "RollMethods.h"
 
 // DBCStores
-#include "GemPropertiesMethods.h"
 #include "GemPropertiesEntryMethods.h"
 #include "SpellEntryMethods.h"
 
@@ -1450,8 +1449,8 @@ void RegisterFunctions(Eluna* E)
     ElunaTemplate<Roll>::SetMethods(E, RollMethods);
 
     
-    ElunaTemplate<GemPropertiesEntry>::Register(E, "GemProperties");
-    ElunaTemplate<GemPropertiesEntry>::SetMethods(E, LuaGemProperties::GemPropertiesMethods);
+    ElunaTemplate<GemPropertiesEntry>::Register(E, "GemPropertiesEntry");
+    ElunaTemplate<GemPropertiesEntry>::SetMethods(E, LuaGemPropertiesEntry::GemPropertiesEntryMethods);
 
     ElunaTemplate<SpellEntry>::Register(E, "SpellEntry");
     ElunaTemplate<SpellEntry>::SetMethods(E, LuaSpellEntry::SpellEntryMethods);

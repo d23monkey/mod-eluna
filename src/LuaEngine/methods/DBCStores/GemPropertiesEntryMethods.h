@@ -33,14 +33,14 @@ namespace LuaGemPropertiesEntry
      */
     int GetSpellItemEnchantement(lua_State* L, GemPropertiesEntry* entry)
     {
-        Forge::Push(L, entry->spellitemenchantement);
+        Eluna::Push(L, entry->spellitemenchantement);
         return 1;
     }
 
-    ElunaRegister<GemPropertiesEntry> GemPropertiesMethods[] =
+    ElunaRegister<GemPropertiesEntry> GemPropertiesEntryMethods[] =
     {
         // Getters
-        { "GetID", &LuaGemProperties::GetID },
+        { "GetID", &LuaGemPropertiesEntry::GetID },
         { "GetSpellItemEnchantement", &LuaGemPropertiesEntry::GetSpellItemEnchantement },
 
         // Setters
