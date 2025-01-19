@@ -1369,19 +1369,12 @@ namespace LuaGlobalFunctions
         if (numArgs > 1)
             query = Eluna::FormatQuery(L, query).c_str();
 
-#if defined TRINITY || AZEROTHCORE
         ElunaQuery result = WorldDatabase.Query(query);
         if (result)
             Eluna::Push(L, new ElunaQuery(result));
         else
             Eluna::Push(L);
-#else
-        ElunaQuery* result = WorldDatabase.QueryNamed(query);
-        if (result)
-            Eluna::Push(L, result);
-        else
-            Eluna::Push(L);
-#endif
+      
         return 1;
     }
 
@@ -1454,19 +1447,12 @@ namespace LuaGlobalFunctions
         if (numArgs > 1)
             query = Eluna::FormatQuery(L, query).c_str();
 
-#if defined TRINITY || AZEROTHCORE
         QueryResult result = CharacterDatabase.Query(query);
         if (result)
             Eluna::Push(L, new QueryResult(result));
         else
             Eluna::Push(L);
-#else
-        QueryNamedResult* result = CharacterDatabase.QueryNamed(query);
-        if (result)
-            Eluna::Push(L, result);
-        else
-            Eluna::Push(L);
-#endif
+      
         return 1;
     }
 
@@ -1532,19 +1518,12 @@ namespace LuaGlobalFunctions
         if (numArgs > 1)
             query = Eluna::FormatQuery(L, query).c_str();
 
-#if defined TRINITY || AZEROTHCORE
         QueryResult result = LoginDatabase.Query(query);
         if (result)
             Eluna::Push(L, new QueryResult(result));
         else
             Eluna::Push(L);
-#else
-        QueryNamedResult* result = LoginDatabase.QueryNamed(query);
-        if (result)
-            Eluna::Push(L, result);
-        else
-            Eluna::Push(L);
-#endif
+      
         return 1;
     }
 
