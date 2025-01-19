@@ -8,6 +8,7 @@
 #define GLOBALMETHODS_H
 
 #include "BindingMap.h"
+#include "ElunaDBCRegistry.h"
 
 #ifdef AZEROTHCORE
 
@@ -3531,5 +3532,161 @@ namespace LuaGlobalFunctions
         return 0;
     }
     #endif
+
+    /**
+     * Returns the instance of the specified DBC (DatabaseClient) store.
+     *
+     * This function retrieves the DBC store associated with the provided name 
+     * and pushes it onto the Lua stack.
+     *
+     * @param const char* dbcName : The name of the DBC store to retrieve.
+     * @param uint32 id : The ID used to look up within the specified DBC store.
+     *
+     * @return [DBCStore] store : The requested DBC store instance.
+     */
+    int LookupEntry(lua_State* L)
+    {
+        const char* dbcName = Eluna::CHECKVAL<const char*>(L, 1);
+        uint32 id = Eluna::CHECKVAL<uint32>(L, 2);
+
+        for (const auto& dbc : dbcRegistry)
+        {
+            if (dbc.name == dbcName)
+            {
+                const void* entry = dbc.lookupFunction(id);
+                if (!entry)
+                    return 0;
+
+                dbc.pushFunction(L, entry);
+                return 1;
+            }
+        }
+
+        return luaL_error(L, "Invalid DBC name: %s", dbcName);
+    }
+
+    luaL_Reg GlobalMethods[] =
+    {
+        // Hooks
+        { "RegisterPacketEvent", &LuaGlobalFunctions::RegisterPacketEvent },
+        { "RegisterServerEvent", &LuaGlobalFunctions::RegisterServerEvent },
+        { "RegisterPlayerEvent", &LuaGlobalFunctions::RegisterPlayerEvent },
+        { "RegisterGuildEvent", &LuaGlobalFunctions::RegisterGuildEvent },
+        { "RegisterGroupEvent", &LuaGlobalFunctions::RegisterGroupEvent },
+        { "RegisterCreatureEvent", &LuaGlobalFunctions::RegisterCreatureEvent },
+        { "RegisterUniqueCreatureEvent", &LuaGlobalFunctions::RegisterUniqueCreatureEvent },
+        { "RegisterCreatureGossipEvent", &LuaGlobalFunctions::RegisterCreatureGossipEvent },
+        { "RegisterGameObjectEvent", &LuaGlobalFunctions::RegisterGameObjectEvent },
+        { "RegisterGameObjectGossipEvent", &LuaGlobalFunctions::RegisterGameObjectGossipEvent },
+        { "RegisterItemEvent", &LuaGlobalFunctions::RegisterItemEvent },
+        { "RegisterItemGossipEvent", &LuaGlobalFunctions::RegisterItemGossipEvent },
+        { "RegisterPlayerGossipEvent", &LuaGlobalFunctions::RegisterPlayerGossipEvent },
+        { "RegisterBGEvent", &LuaGlobalFunctions::RegisterBGEvent },
+        { "RegisterMapEvent", &LuaGlobalFunctions::RegisterMapEvent },
+        { "RegisterInstanceEvent", &LuaGlobalFunctions::RegisterInstanceEvent },
+
+        { "ClearBattleGroundEvents", &LuaGlobalFunctions::ClearBattleGroundEvents },
+        { "ClearCreatureEvents", &LuaGlobalFunctions::ClearCreatureEvents },
+        { "ClearUniqueCreatureEvents", &LuaGlobalFunctions::ClearUniqueCreatureEvents },
+        { "ClearCreatureGossipEvents", &LuaGlobalFunctions::ClearCreatureGossipEvents },
+        { "ClearGameObjectEvents", &LuaGlobalFunctions::ClearGameObjectEvents },
+        { "ClearGameObjectGossipEvents", &LuaGlobalFunctions::ClearGameObjectGossipEvents },
+        { "ClearGroupEvents", &LuaGlobalFunctions::ClearGroupEvents },
+        { "ClearGuildEvents", &LuaGlobalFunctions::ClearGuildEvents },
+        { "ClearItemEvents", &LuaGlobalFunctions::ClearItemEvents },
+        { "ClearItemGossipEvents", &LuaGlobalFunctions::ClearItemGossipEvents },
+        { "ClearPacketEvents", &LuaGlobalFunctions::ClearPacketEvents },
+        { "ClearPlayerEvents", &LuaGlobalFunctions::ClearPlayerEvents },
+        { "ClearPlayerGossipEvents", &LuaGlobalFunctions::ClearPlayerGossipEvents },
+        { "ClearServerEvents", &LuaGlobalFunctions::ClearServerEvents },
+        { "ClearMapEvents", &LuaGlobalFunctions::ClearMapEvents },
+        { "ClearInstanceEvents", &LuaGlobalFunctions::ClearInstanceEvents },
+
+        // Getters
+        { "GetLuaEngine", &LuaGlobalFunctions::GetLuaEngine },
+        { "GetCoreName", &LuaGlobalFunctions::GetCoreName },
+        { "GetRealmID", &LuaGlobalFunctions::GetRealmID },
+        { "GetCoreVersion", &LuaGlobalFunctions::GetCoreVersion },
+        { "GetCoreExpansion", &LuaGlobalFunctions::GetCoreExpansion },
+        { "GetStateMap", &LuaGlobalFunctions::GetStateMap },
+        { "GetStateMapId", &LuaGlobalFunctions::GetStateMapId },
+        { "GetStateInstanceId", &LuaGlobalFunctions::GetStateInstanceId },
+        { "GetQuest", &LuaGlobalFunctions::GetQuest },
+        { "GetPlayerByGUID", &LuaGlobalFunctions::GetPlayerByGUID },
+        { "GetPlayerByName", &LuaGlobalFunctions::GetPlayerByName },
+        { "GetGameTime", &LuaGlobalFunctions::GetGameTime },
+        { "GetPlayersInWorld", &LuaGlobalFunctions::GetPlayersInWorld },
+        { "GetGuildByName", &LuaGlobalFunctions::GetGuildByName },
+        { "GetGuildByLeaderGUID", &LuaGlobalFunctions::GetGuildByLeaderGUID },
+        { "GetPlayerCount", &LuaGlobalFunctions::GetPlayerCount },
+        { "GetPlayerGUID", &LuaGlobalFunctions::GetPlayerGUID },
+        { "GetItemGUID", &LuaGlobalFunctions::GetItemGUID },
+        { "GetItemTemplate", &LuaGlobalFunctions::GetItemTemplate },
+        { "GetObjectGUID", &LuaGlobalFunctions::GetObjectGUID },
+        { "GetUnitGUID", &LuaGlobalFunctions::GetUnitGUID },
+        { "GetGUIDLow", &LuaGlobalFunctions::GetGUIDLow },
+        { "GetGUIDType", &LuaGlobalFunctions::GetGUIDType },
+        { "GetGUIDEntry", &LuaGlobalFunctions::GetGUIDEntry },
+        { "GetAreaName", &LuaGlobalFunctions::GetAreaName },
+        { "GetOwnerHalaa", &LuaGlobalFunctions::GetOwnerHalaa },
+        { "bit_not", &LuaGlobalFunctions::bit_not },
+        { "bit_xor", &LuaGlobalFunctions::bit_xor },
+        { "bit_rshift", &LuaGlobalFunctions::bit_rshift },
+        { "bit_lshift", &LuaGlobalFunctions::bit_lshift },
+        { "bit_or", &LuaGlobalFunctions::bit_or },
+        { "bit_and", &LuaGlobalFunctions::bit_and },
+        { "GetItemLink", &LuaGlobalFunctions::GetItemLink },
+        { "GetMapById", &LuaGlobalFunctions::GetMapById },
+        { "GetCurrTime", &LuaGlobalFunctions::GetCurrTime },
+        { "GetTimeDiff", &LuaGlobalFunctions::GetTimeDiff },
+        { "PrintInfo", &LuaGlobalFunctions::PrintInfo },
+        { "PrintError", &LuaGlobalFunctions::PrintError },
+        { "PrintDebug", &LuaGlobalFunctions::PrintDebug },
+        { "GetActiveGameEvents", &LuaGlobalFunctions::GetActiveGameEvents },
+
+        // Boolean
+        { "IsCompatibilityMode", &LuaGlobalFunctions::IsCompatibilityMode },
+        { "IsInventoryPos", &LuaGlobalFunctions::IsInventoryPos },
+        { "IsEquipmentPos", &LuaGlobalFunctions::IsEquipmentPos },
+        { "IsBankPos", &LuaGlobalFunctions::IsBankPos },
+        { "IsBagPos", &LuaGlobalFunctions::IsBagPos },
+        { "IsGameEventActive", &LuaGlobalFunctions::IsGameEventActive },
+
+        // Other
+        { "ReloadEluna", &LuaGlobalFunctions::ReloadEluna },
+        { "RunCommand", &LuaGlobalFunctions::RunCommand },
+        { "SendWorldMessage", &LuaGlobalFunctions::SendWorldMessage },
+        { "WorldDBQuery", &LuaGlobalFunctions::WorldDBQuery },
+        { "WorldDBQueryAsync", &LuaGlobalFunctions::WorldDBQueryAsync },
+        { "WorldDBExecute", &LuaGlobalFunctions::WorldDBExecute },
+        { "CharDBQuery", &LuaGlobalFunctions::CharDBQuery },
+        { "CharDBQueryAsync", &LuaGlobalFunctions::CharDBQueryAsync },
+        { "CharDBExecute", &LuaGlobalFunctions::CharDBExecute },
+        { "AuthDBQuery", &LuaGlobalFunctions::AuthDBQuery },
+        { "AuthDBQueryAsync", &LuaGlobalFunctions::AuthDBQueryAsync },
+        { "AuthDBExecute", &LuaGlobalFunctions::AuthDBExecute },
+        { "CreateLuaEvent", &LuaGlobalFunctions::CreateLuaEvent },
+        { "RemoveEventById", &LuaGlobalFunctions::RemoveEventById },
+        { "RemoveEvents", &LuaGlobalFunctions::RemoveEvents },
+        { "PerformIngameSpawn", &LuaGlobalFunctions::PerformIngameSpawn },
+        { "CreatePacket", &LuaGlobalFunctions::CreatePacket },
+        { "AddVendorItem", &LuaGlobalFunctions::AddVendorItem },
+        { "VendorRemoveItem", &LuaGlobalFunctions::VendorRemoveItem },
+        { "VendorRemoveAllItems", &LuaGlobalFunctions::VendorRemoveAllItems },
+        { "Kick", &LuaGlobalFunctions::Kick },
+        { "Ban", &LuaGlobalFunctions::Ban },
+        { "SaveAllPlayers", &LuaGlobalFunctions::SaveAllPlayers },
+        { "SendMail", &LuaGlobalFunctions::SendMail },
+        { "AddTaxiPath", &LuaGlobalFunctions::AddTaxiPath },
+        { "CreateInt64", &LuaGlobalFunctions::CreateLongLong },
+        { "CreateUint64", &LuaGlobalFunctions::CreateULongLong },
+        { "StartGameEvent", &LuaGlobalFunctions::StartGameEvent },
+        { "StopGameEvent", &LuaGlobalFunctions::StopGameEvent },
+        { "HttpRequest", &LuaGlobalFunctions::HttpRequest },
+        { "SetOwnerHalaa", &LuaGlobalFunctions::SetOwnerHalaa },
+        { "LookupEntry", &LuaGlobalFunctions::LookupEntry },
+
+        { NULL, NULL }
+    };
 }
 #endif
