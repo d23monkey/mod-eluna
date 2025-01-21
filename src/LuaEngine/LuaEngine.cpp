@@ -777,6 +777,44 @@ void Eluna::Push(lua_State* luastate, ObjectGuid const guid)
     ElunaTemplate<unsigned long long>::Push(luastate, new unsigned long long(guid.GetRawValue()));
 }
 
+std::string Eluna::FormatQuery(lua_State* L, const char* query)
+{
+    int numArgs = lua_gettop(L);
+    std::string formattedQuery = query;
+
+    std::vector<std::string> args;
+    for (int i = 2; i <= numArgs; ++i) 
+    {
+        if (lua_isnumber(L, i)) 
+        {
+            args.push_back(std::to_string(lua_tonumber(L, i)));
+        } 
+        else if (lua_isstring(L, i)) 
+        {
+            args.push_back(lua_tostring(L, i));
+        } 
+        else 
+        {
+            luaL_error(L, "Unsupported argument type. Only numbers and strings are supported.");
+            return "";
+        }
+    }
+
+    size_t position = 0;
+    for (const auto& arg : args) 
+    {
+        position = formattedQuery.find("?", position);
+        if (position == std::string::npos) 
+        {
+            break;
+        }
+        formattedQuery.replace(position, 1, arg);
+        position += arg.length();
+    }
+
+    return formattedQuery;
+}
+
 static int CheckIntegerRange(lua_State* luastate, int narg, int min, int max)
 {
     double value = luaL_checknumber(luastate, narg);
