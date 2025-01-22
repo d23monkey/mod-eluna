@@ -35,3 +35,4 @@ extern std::vector<DBCDefinition> dbcRegistry;
     }
 
 #endif // ELUNADBCREGISTRY_H
+
