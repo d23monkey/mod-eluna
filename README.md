@@ -12,7 +12,7 @@
 </div>
 
 > [!NOTE]
-> mod-eluna © is a powerful Lua scripting engine embedded into the AzerothCore emulator. We are committed to continuously improving mod-Eluna for both developers and server administrators.
+> mod-eluna © is a powerful Lua scripting engine embedded into the AzerothCore emulator. We are committed to continuously improving mod-eluna for both developers and server administrators.
 
 <details>
 <summary>🎯 Table of Contents</summary>
@@ -47,14 +47,6 @@ Feel free to open an issue for installation or scripting problems.
 ### Quick Links
 - 📚 [mod-eluna API](https://www.azerothcore.org/eluna/)
 - 📖 [Lua Reference](http://www.lua.org/manual/5.2/)
-
-## 🌐 Community
-
-Join our thriving community:
-
-<div align="center">
-    
-[![AzerothCore Discord](https://img.shields.io/badge/AzerothCore_Discord-Join_Us-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/ZKSVREE7)
 
 </div>
 
