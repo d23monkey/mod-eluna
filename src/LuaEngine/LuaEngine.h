@@ -22,6 +22,7 @@
 #include "ElunaUtility.h"
 #include "HttpManager.h"
 #include "EventEmitter.h"
+#include "TicketMgr.h"
 #include <mutex>
 #include <memory>
 
@@ -216,6 +217,7 @@ public:
     BindingMap< EntryKey<Hooks::GossipEvents> >*     PlayerGossipBindings;
     BindingMap< EntryKey<Hooks::InstanceEvents> >*   MapEventBindings;
     BindingMap< EntryKey<Hooks::InstanceEvents> >*   InstanceEventBindings;
+    BindingMap< EventKey<Hooks::TicketEvents> >*     TicketEventBindings;
 
     BindingMap< UniqueObjectKey<Hooks::CreatureEvents> >*  CreatureUniqueBindings;
 
@@ -520,6 +522,13 @@ public:
     void OnBGEnd(BattleGround* bg, BattleGroundTypeId bgId, uint32 instanceId, TeamId winner);
     void OnBGCreate(BattleGround* bg, BattleGroundTypeId bgId, uint32 instanceId);
     void OnBGDestroy(BattleGround* bg, BattleGroundTypeId bgId, uint32 instanceId);
+
+    /* Ticket */
+    void OnTicketCreate(Player* player, GmTicket* ticket);
+    void OnTicketUpdate(Player* player, GmTicket* ticket);
+    void OnTicketClose(Player* player, GmTicket* ticket);
+    void OnTicketStatusUpdate(Player* player, GmTicket* ticket);
+    void OnTicketResolve(Player* player, GmTicket* ticket);
 };
 template<> Unit* Eluna::CHECKOBJ<Unit>(lua_State* L, int narg, bool error);
 template<> Object* Eluna::CHECKOBJ<Object>(lua_State* L, int narg, bool error);

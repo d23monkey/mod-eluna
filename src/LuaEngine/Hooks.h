@@ -86,6 +86,7 @@ namespace Hooks
         REGTYPE_BG,
         REGTYPE_MAP,
         REGTYPE_INSTANCE,
+        REGTYPE_TICKET,
         REGTYPE_COUNT
     };
 
@@ -364,6 +365,16 @@ namespace Hooks
         INSTANCE_EVENT_ON_GAMEOBJECT_CREATE             = 6,    // (event, instance_data, map, go)
         INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS   = 7,    // (event, instance_data, map)
         INSTANCE_EVENT_COUNT
+    };
+
+    enum TicketEvents
+    {
+        TICKET_EVENT_ON_CREATE                          = 1,    // (event, player, ticket)
+        TICKET_EVENT_ON_UPDATE                          = 2,    // (event, player, ticket, message)
+        TICKET_EVENT_ON_CLOSE                           = 3,    // (event, player, ticket)
+        TICKET_EVENT_STATUS_UPDATE                      = 4,    // (event, player, ticket)
+        TICKET_EVENT_ON_RESOLVE                         = 5,    // (event, player, ticket)
+        TICKET_EVENT_COUNT
     };
 };
 
