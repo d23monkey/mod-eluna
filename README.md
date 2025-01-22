@@ -19,9 +19,8 @@
 
 - [Acknowledgements](#-acknowledgements)
 - [Support & Resources](#-support--resources)
-- [Community](#-community)
 - [Installation](#-installation)
-- [Documentation](#-documentation)
+- [Documentation](#-eluna-documentation)
 - [Useful Links](#-useful-links)
 - [Community Additions](#%EF%B8%8F-community-additions)
 - [Contributing](#-contributing)
