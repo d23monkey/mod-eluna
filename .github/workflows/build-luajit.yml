@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  build_lua51:
+  build_luajit:
     uses: ./.github/workflows/core-build-base.yml
     with:
       lua_version: 'luajit'
