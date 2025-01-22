@@ -35,7 +35,7 @@
 mod-eluna is a fork of the original [Eluna](https://github.com/ElunaLuaEngine/Eluna) project. We extend our heartfelt gratitude to the Eluna TC team for their work.
 
 > **Explore More:**
-> - [Original Wiki](https://github.com/ElunaLuaEngine/Eluna)
+> - [Original Github](https://github.com/ElunaLuaEngine/Eluna)
 > - [Eluna Discord](https://discord.gg/bjkCVWqqfX)
 
 ## 💡 Support & Resources
