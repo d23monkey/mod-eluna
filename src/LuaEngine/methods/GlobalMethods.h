@@ -25,7 +25,7 @@ enum BanMode
 /***
  * These functions can be used anywhere at any time, including at start-up.
  */
-namespace LuaGlobalFunctions
+namespace LuaGlobal
 {
     /**
      * Returns Lua engine's name.
@@ -3143,5 +3143,126 @@ namespace LuaGlobalFunctions
 
         return 0;
     }
+
+    luaL_Reg GlobalMethods[] =
+    {
+        // Hooks
+        { "RegisterPacketEvent", &LuaGlobal::RegisterPacketEvent },
+        { "RegisterServerEvent", &LuaGlobal::RegisterServerEvent },
+        { "RegisterPlayerEvent", &LuaGlobal::RegisterPlayerEvent },
+        { "RegisterGuildEvent", &LuaGlobal::RegisterGuildEvent },
+        { "RegisterGroupEvent", &LuaGlobal::RegisterGroupEvent },
+        { "RegisterCreatureEvent", &LuaGlobal::RegisterCreatureEvent },
+        { "RegisterUniqueCreatureEvent", &LuaGlobal::RegisterUniqueCreatureEvent },
+        { "RegisterCreatureGossipEvent", &LuaGlobal::RegisterCreatureGossipEvent },
+        { "RegisterGameObjectEvent", &LuaGlobal::RegisterGameObjectEvent },
+        { "RegisterGameObjectGossipEvent", &LuaGlobal::RegisterGameObjectGossipEvent },
+        { "RegisterItemEvent", &LuaGlobal::RegisterItemEvent },
+        { "RegisterItemGossipEvent", &LuaGlobal::RegisterItemGossipEvent },
+        { "RegisterPlayerGossipEvent", &LuaGlobal::RegisterPlayerGossipEvent },
+        { "RegisterBGEvent", &LuaGlobal::RegisterBGEvent },
+        { "RegisterMapEvent", &LuaGlobal::RegisterMapEvent },
+        { "RegisterInstanceEvent", &LuaGlobal::RegisterInstanceEvent },
+
+        { "ClearBattleGroundEvents", &LuaGlobal::ClearBattleGroundEvents },
+        { "ClearCreatureEvents", &LuaGlobal::ClearCreatureEvents },
+        { "ClearUniqueCreatureEvents", &LuaGlobal::ClearUniqueCreatureEvents },
+        { "ClearCreatureGossipEvents", &LuaGlobal::ClearCreatureGossipEvents },
+        { "ClearGameObjectEvents", &LuaGlobal::ClearGameObjectEvents },
+        { "ClearGameObjectGossipEvents", &LuaGlobal::ClearGameObjectGossipEvents },
+        { "ClearGroupEvents", &LuaGlobal::ClearGroupEvents },
+        { "ClearGuildEvents", &LuaGlobal::ClearGuildEvents },
+        { "ClearItemEvents", &LuaGlobal::ClearItemEvents },
+        { "ClearItemGossipEvents", &LuaGlobal::ClearItemGossipEvents },
+        { "ClearPacketEvents", &LuaGlobal::ClearPacketEvents },
+        { "ClearPlayerEvents", &LuaGlobal::ClearPlayerEvents },
+        { "ClearPlayerGossipEvents", &LuaGlobal::ClearPlayerGossipEvents },
+        { "ClearServerEvents", &LuaGlobal::ClearServerEvents },
+        { "ClearMapEvents", &LuaGlobal::ClearMapEvents },
+        { "ClearInstanceEvents", &LuaGlobal::ClearInstanceEvents },
+
+        // Getters
+        { "GetLuaEngine", &LuaGlobal::GetLuaEngine },
+        { "GetCoreName", &LuaGlobal::GetCoreName },
+        { "GetRealmID", &LuaGlobal::GetRealmID },
+        { "GetCoreVersion", &LuaGlobal::GetCoreVersion },
+        { "GetCoreExpansion", &LuaGlobal::GetCoreExpansion },
+        { "GetStateMap", &LuaGlobal::GetStateMap },
+        { "GetStateMapId", &LuaGlobal::GetStateMapId },
+        { "GetStateInstanceId", &LuaGlobal::GetStateInstanceId },
+        { "GetQuest", &LuaGlobal::GetQuest },
+        { "GetPlayerByGUID", &LuaGlobal::GetPlayerByGUID },
+        { "GetPlayerByName", &LuaGlobal::GetPlayerByName },
+        { "GetGameTime", &LuaGlobal::GetGameTime },
+        { "GetPlayersInWorld", &LuaGlobal::GetPlayersInWorld },
+        { "GetGuildByName", &LuaGlobal::GetGuildByName },
+        { "GetGuildByLeaderGUID", &LuaGlobal::GetGuildByLeaderGUID },
+        { "GetPlayerCount", &LuaGlobal::GetPlayerCount },
+        { "GetPlayerGUID", &LuaGlobal::GetPlayerGUID },
+        { "GetItemGUID", &LuaGlobal::GetItemGUID },
+        { "GetItemTemplate", &LuaGlobal::GetItemTemplate },
+        { "GetObjectGUID", &LuaGlobal::GetObjectGUID },
+        { "GetUnitGUID", &LuaGlobal::GetUnitGUID },
+        { "GetGUIDLow", &LuaGlobal::GetGUIDLow },
+        { "GetGUIDType", &LuaGlobal::GetGUIDType },
+        { "GetGUIDEntry", &LuaGlobal::GetGUIDEntry },
+        { "GetAreaName", &LuaGlobal::GetAreaName },
+        { "GetOwnerHalaa", &LuaGlobal::GetOwnerHalaa },
+        { "bit_not", &LuaGlobal::bit_not },
+        { "bit_xor", &LuaGlobal::bit_xor },
+        { "bit_rshift", &LuaGlobal::bit_rshift },
+        { "bit_lshift", &LuaGlobal::bit_lshift },
+        { "bit_or", &LuaGlobal::bit_or },
+        { "bit_and", &LuaGlobal::bit_and },
+        { "GetItemLink", &LuaGlobal::GetItemLink },
+        { "GetMapById", &LuaGlobal::GetMapById },
+        { "GetCurrTime", &LuaGlobal::GetCurrTime },
+        { "GetTimeDiff", &LuaGlobal::GetTimeDiff },
+        { "PrintInfo", &LuaGlobal::PrintInfo },
+        { "PrintError", &LuaGlobal::PrintError },
+        { "PrintDebug", &LuaGlobal::PrintDebug },
+        { "GetActiveGameEvents", &LuaGlobal::GetActiveGameEvents },
+
+        // Boolean
+        { "IsCompatibilityMode", &LuaGlobal::IsCompatibilityMode },
+        { "IsInventoryPos", &LuaGlobal::IsInventoryPos },
+        { "IsEquipmentPos", &LuaGlobal::IsEquipmentPos },
+        { "IsBankPos", &LuaGlobal::IsBankPos },
+        { "IsBagPos", &LuaGlobal::IsBagPos },
+        { "IsGameEventActive", &LuaGlobal::IsGameEventActive },
+
+        // Other
+        { "ReloadEluna", &LuaGlobal::ReloadEluna },
+        { "RunCommand", &LuaGlobal::RunCommand },
+        { "SendWorldMessage", &LuaGlobal::SendWorldMessage },
+        { "WorldDBQuery", &LuaGlobal::WorldDBQuery },
+        { "WorldDBQueryAsync", &LuaGlobal::WorldDBQueryAsync },
+        { "WorldDBExecute", &LuaGlobal::WorldDBExecute },
+        { "CharDBQuery", &LuaGlobal::CharDBQuery },
+        { "CharDBQueryAsync", &LuaGlobal::CharDBQueryAsync },
+        { "CharDBExecute", &LuaGlobal::CharDBExecute },
+        { "AuthDBQuery", &LuaGlobal::AuthDBQuery },
+        { "AuthDBQueryAsync", &LuaGlobal::AuthDBQueryAsync },
+        { "AuthDBExecute", &LuaGlobal::AuthDBExecute },
+        { "CreateLuaEvent", &LuaGlobal::CreateLuaEvent },
+        { "RemoveEventById", &LuaGlobal::RemoveEventById },
+        { "RemoveEvents", &LuaGlobal::RemoveEvents },
+        { "PerformIngameSpawn", &LuaGlobal::PerformIngameSpawn },
+        { "CreatePacket", &LuaGlobal::CreatePacket },
+        { "AddVendorItem", &LuaGlobal::AddVendorItem },
+        { "VendorRemoveItem", &LuaGlobal::VendorRemoveItem },
+        { "VendorRemoveAllItems", &LuaGlobal::VendorRemoveAllItems },
+        { "Kick", &LuaGlobal::Kick },
+        { "Ban", &LuaGlobal::Ban },
+        { "SaveAllPlayers", &LuaGlobal::SaveAllPlayers },
+        { "SendMail", &LuaGlobal::SendMail },
+        { "AddTaxiPath", &LuaGlobal::AddTaxiPath },
+        { "CreateInt64", &LuaGlobal::CreateLongLong },
+        { "CreateUint64", &LuaGlobal::CreateULongLong },
+        { "StartGameEvent", &LuaGlobal::StartGameEvent },
+        { "StopGameEvent", &LuaGlobal::StopGameEvent },
+        { "HttpRequest", &LuaGlobal::HttpRequest },
+        { "SetOwnerHalaa", &LuaGlobal::SetOwnerHalaa }
+    };
 }
 #endif

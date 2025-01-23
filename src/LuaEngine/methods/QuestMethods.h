@@ -173,5 +173,24 @@ namespace LuaQuest
         Eluna::Push(L, quest->GetMaxLevel());
         return 1;
     }*/
+
+   ElunaRegister<Quest> QuestMethods[] =
+    {
+        // Getters
+        { "GetId", &LuaQuest::GetId },
+        { "GetLevel", &LuaQuest::GetLevel },
+        // {"GetMaxLevel", &LuaQuest::GetMaxLevel},                   // :GetMaxLevel() - UNDOCUMENTED - Returns the quest's max level
+        { "GetMinLevel", &LuaQuest::GetMinLevel },
+        { "GetNextQuestId", &LuaQuest::GetNextQuestId },
+        { "GetPrevQuestId", &LuaQuest::GetPrevQuestId },
+        { "GetNextQuestInChain", &LuaQuest::GetNextQuestInChain },
+        { "GetFlags", &LuaQuest::GetFlags },
+        { "GetType", &LuaQuest::GetType },
+
+        // Boolean
+        { "HasFlag", &LuaQuest::HasFlag },
+        { "IsDaily", &LuaQuest::IsDaily },
+        { "IsRepeatable", &LuaQuest::IsRepeatable }
+    };
 };
 #endif

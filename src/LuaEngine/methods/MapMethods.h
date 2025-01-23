@@ -325,5 +325,35 @@ namespace LuaMap
         lua_settop(L, tbl);
         return 1;
     }
+
+    
+    ElunaRegister<Map> MapMethods[] =
+    {
+        // Getters
+        { "GetName", &LuaMap::GetName },
+        { "GetDifficulty", &LuaMap::GetDifficulty },
+        { "GetInstanceId", &LuaMap::GetInstanceId },
+        { "GetInstanceData", &LuaMap::GetInstanceData },
+        { "GetPlayerCount", &LuaMap::GetPlayerCount },
+        { "GetPlayers", &LuaMap::GetPlayers },
+        { "GetMapId", &LuaMap::GetMapId },
+        { "GetAreaId", &LuaMap::GetAreaId },
+        { "GetHeight", &LuaMap::GetHeight },
+        { "GetWorldObject", &LuaMap::GetWorldObject },
+
+        // Setters
+        { "SetWeather", &LuaMap::SetWeather },
+
+        // Boolean
+        { "IsArena", &LuaMap::IsArena },
+        { "IsBattleground", &LuaMap::IsBattleground },
+        { "IsDungeon", &LuaMap::IsDungeon },
+        { "IsEmpty", &LuaMap::IsEmpty },
+        { "IsHeroic", &LuaMap::IsHeroic },
+        { "IsRaid", &LuaMap::IsRaid },
+
+        // Other
+        { "SaveInstanceData", &LuaMap::SaveInstanceData }
+    };
 };
 #endif

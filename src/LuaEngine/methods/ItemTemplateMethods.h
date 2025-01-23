@@ -186,6 +186,26 @@ namespace LuaItemTemplate
         Eluna::Push(L, itemTemplate->RequiredLevel);
         return 1;
     }
+
+    ElunaRegister<ItemTemplate> ItemTemplateMethods[] =
+    {
+        { "GetItemId", &LuaItemTemplate::GetItemId },
+        { "GetClass", &LuaItemTemplate::GetClass },
+        { "GetSubClass", &LuaItemTemplate::GetSubClass },
+        { "GetName", &LuaItemTemplate::GetName },
+        { "GetDisplayId", &LuaItemTemplate::GetDisplayId },
+        { "GetQuality", &LuaItemTemplate::GetQuality },
+        { "GetFlags", &LuaItemTemplate::GetFlags },
+        { "GetExtraFlags", &LuaItemTemplate::GetExtraFlags },
+        { "GetBuyCount", &LuaItemTemplate::GetBuyCount },
+        { "GetBuyPrice", &LuaItemTemplate::GetBuyPrice },
+        { "GetSellPrice", &LuaItemTemplate::GetSellPrice },
+        { "GetInventoryType", &LuaItemTemplate::GetInventoryType },
+        { "GetAllowableClass", &LuaItemTemplate::GetAllowableClass },
+        { "GetAllowableRace", &LuaItemTemplate::GetAllowableRace },
+        { "GetItemLevel", &LuaItemTemplate::GetItemLevel },
+        { "GetRequiredLevel", &LuaItemTemplate::GetRequiredLevel }
+    };
 }
 
 #endif

@@ -188,5 +188,23 @@ namespace LuaChatHandler
         Eluna::Push(L, handler->HasSentErrorMessage());
         return 1;
     }
+
+    ElunaRegister<ChatHandler> ChatHandlerMethods[] =
+    {
+        { "SendSysMessage", &LuaChatHandler::SendSysMessage },
+        { "IsConsole", &LuaChatHandler::IsConsole },
+        { "GetPlayer", &LuaChatHandler::GetPlayer },
+        { "SendGlobalSysMessage", &LuaChatHandler::SendGlobalSysMessage },
+        { "SendGlobalGMSysMessage", &LuaChatHandler::SendGlobalGMSysMessage },
+        { "HasLowerSecurity", &LuaChatHandler::HasLowerSecurity },
+        { "HasLowerSecurityAccount", &LuaChatHandler::HasLowerSecurityAccount },
+        { "GetSelectedPlayer", &LuaChatHandler::GetSelectedPlayer },
+        { "GetSelectedCreature", &LuaChatHandler::GetSelectedCreature },
+        { "GetSelectedUnit", &LuaChatHandler::GetSelectedUnit },
+        { "GetSelectedObject", &LuaChatHandler::GetSelectedObject },
+        { "GetSelectedPlayerOrSelf", &LuaChatHandler::GetSelectedPlayerOrSelf },
+        { "IsAvailable", &LuaChatHandler::IsAvailable },
+        { "HasSentErrorMessage", &LuaChatHandler::HasSentErrorMessage }
+    };
 }
 #endif

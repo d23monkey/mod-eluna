@@ -724,5 +724,70 @@ namespace LuaItem
         item->SaveToDB(trans);
         return 0;
     }
+
+    ElunaRegister<Item> ItemMethods[] =
+    {
+        // Getters
+        { "GetOwnerGUID", &LuaItem::GetOwnerGUID },
+        { "GetOwner", &LuaItem::GetOwner },
+        { "GetCount", &LuaItem::GetCount },
+        { "GetMaxStackCount", &LuaItem::GetMaxStackCount },
+        { "GetSlot", &LuaItem::GetSlot },
+        { "GetBagSlot", &LuaItem::GetBagSlot },
+        { "GetEnchantmentId", &LuaItem::GetEnchantmentId },
+        { "GetSpellId", &LuaItem::GetSpellId },
+        { "GetSpellTrigger", &LuaItem::GetSpellTrigger },
+        { "GetItemLink", &LuaItem::GetItemLink },
+        { "GetClass", &LuaItem::GetClass },
+        { "GetSubClass", &LuaItem::GetSubClass },
+        { "GetName", &LuaItem::GetName },
+        { "GetDisplayId", &LuaItem::GetDisplayId },
+        { "GetQuality", &LuaItem::GetQuality },
+        { "GetBuyCount", &LuaItem::GetBuyCount },
+        { "GetBuyPrice", &LuaItem::GetBuyPrice },
+        { "GetSellPrice", &LuaItem::GetSellPrice },
+        { "GetInventoryType", &LuaItem::GetInventoryType },
+        { "GetAllowableClass", &LuaItem::GetAllowableClass },
+        { "GetAllowableRace", &LuaItem::GetAllowableRace },
+        { "GetItemLevel", &LuaItem::GetItemLevel },
+        { "GetRequiredLevel", &LuaItem::GetRequiredLevel },
+        { "GetStatsCount", &LuaItem::GetStatsCount },
+        { "GetRandomProperty", &LuaItem::GetRandomProperty },
+        { "GetRandomSuffix", &LuaItem::GetRandomSuffix },
+        { "GetItemSet", &LuaItem::GetItemSet },
+        { "GetBagSize", &LuaItem::GetBagSize },
+        { "GetItemTemplate", &LuaItem::GetItemTemplate },
+
+        // Setters
+        { "SetOwner", &LuaItem::SetOwner },
+        { "SetBinding", &LuaItem::SetBinding },
+        { "SetCount", &LuaItem::SetCount },
+
+        // Boolean
+        { "IsSoulBound", &LuaItem::IsSoulBound },
+        { "IsBoundAccountWide", &LuaItem::IsBoundAccountWide },
+        { "IsBoundByEnchant", &LuaItem::IsBoundByEnchant },
+        { "IsNotBoundToPlayer", &LuaItem::IsNotBoundToPlayer },
+        { "IsLocked", &LuaItem::IsLocked },
+        { "IsBag", &LuaItem::IsBag },
+        { "IsCurrencyToken", &LuaItem::IsCurrencyToken },
+        { "IsNotEmptyBag", &LuaItem::IsNotEmptyBag },
+        { "IsBroken", &LuaItem::IsBroken },
+        { "CanBeTraded", &LuaItem::CanBeTraded },
+        { "IsInTrade", &LuaItem::IsInTrade },
+        { "IsInBag", &LuaItem::IsInBag },
+        { "IsEquipped", &LuaItem::IsEquipped },
+        { "HasQuest", &LuaItem::HasQuest },
+        { "IsPotion", &LuaItem::IsPotion },
+        { "IsWeaponVellum", &LuaItem::IsWeaponVellum },
+        { "IsArmorVellum", &LuaItem::IsArmorVellum },
+        { "IsConjuredConsumable", &LuaItem::IsConjuredConsumable },
+        //{"IsRefundExpired", &LuaItem::IsRefundExpired},               // :IsRefundExpired() - UNDOCUMENTED - Returns true if the item's refund time has expired
+        { "SetEnchantment", &LuaItem::SetEnchantment },
+        { "ClearEnchantment", &LuaItem::ClearEnchantment },
+
+        // Other
+        { "SaveToDB", &LuaItem::SaveToDB }
+    };
 };
 #endif

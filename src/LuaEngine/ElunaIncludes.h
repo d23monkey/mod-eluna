@@ -56,7 +56,7 @@ typedef Opcodes                 OpcodesList;
 
 /*
  * Note: if you add or change a CORE_NAME or CORE_VERSION #define,
- *   please update LuaGlobalFunctions::GetCoreName or LuaGlobalFunctions::GetCoreVersion documentation example string.
+ *   please update LuaGlobal::GetCoreName or LuaGlobal::GetCoreVersion documentation example string.
  */
 #define CORE_NAME               "AzerothCore"
 

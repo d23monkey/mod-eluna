@@ -112,14 +112,14 @@ private:
     const char* type_name;
 };
 
-template<typename T>
+template<typename T = void>
 struct ElunaRegister
 {
     const char* name;
     int(*mfunc)(lua_State*, T*);
 };
 
-template<typename T>
+template<typename T = void>
 class ElunaTemplate
 {
 public:
@@ -170,7 +170,7 @@ public:
         lua_setfield(E->L, metatable, "__add");
 
         // make new indexes saved to methods
-        lua_pushcfunction(E->L, Substract);
+        lua_pushcfunction(E->L, Subtract);
         lua_setfield(E->L, metatable, "__sub");
 
         // make new indexes saved to methods
@@ -347,9 +347,8 @@ public:
     {
         // Get object pointer (and check type, no error)
         ElunaObject* obj = Eluna::CHECKOBJ<ElunaObject>(L, 1, false);
-        if (obj && manageMemory)
-            delete static_cast<T*>(obj->GetObj());
-        delete obj;
+        obj->~ElunaObject();
+
         return 0;
     }
 
@@ -363,7 +362,7 @@ public:
     static int ArithmeticError(lua_State* L) { return luaL_error(L, "attempt to perform arithmetic on a %s value", tname); }
     static int CompareError(lua_State* L) { return luaL_error(L, "attempt to compare %s", tname); }
     static int Add(lua_State* L) { return ArithmeticError(L); }
-    static int Substract(lua_State* L) { return ArithmeticError(L); }
+    static int Subtract(lua_State* L) { return ArithmeticError(L); }
     static int Multiply(lua_State* L) { return ArithmeticError(L); }
     static int Divide(lua_State* L) { return ArithmeticError(L); }
     static int Mod(lua_State* L) { return ArithmeticError(L); }
@@ -375,6 +374,9 @@ public:
     static int Less(lua_State* L) { return CompareError(L); }
     static int LessOrEqual(lua_State* L) { return CompareError(L); }
     static int Call(lua_State* L) { return luaL_error(L, "attempt to call a %s value", tname); }
+
+    static int MethodWrongState(lua_State* L) { luaL_error(L, "attempt to call method '%s' that does not exist for state: %d", lua_tostring(L, lua_upvalueindex(1)), lua_tointeger(L, lua_upvalueindex(2))); return 0; }
+    static int MethodUnimpl(lua_State* L) { luaL_error(L, "attempt to call method '%s' that is not implemented for this emulator", lua_tostring(L, lua_upvalueindex(1))); return 0; }
 };
 
 template<typename T>
@@ -385,5 +387,39 @@ ElunaObject::ElunaObject(T * obj, bool manageMemory) : callstackid(1), _invalida
 
 template<typename T> const char* ElunaTemplate<T>::tname = NULL;
 template<typename T> bool ElunaTemplate<T>::manageMemory = false;
+
+template <typename T>
+class ElunaTemplateHelper
+{
+public:
+    static int PerformOp(lua_State* L, std::function<T(T, T)> op)
+    {
+        T val1 = Eluna::CHECKVAL<T>(L, 1);
+        T val2 = Eluna::CHECKVAL<T>(L, 2);
+        Eluna::Push(L, op(val1, val2));
+        return 1;
+    }
+    static int PerformOp(lua_State* L, std::function<T(T)> op)
+    {
+        T val = Eluna::CHECKVAL<T>(L, 1);
+        Eluna::Push(L, op(val));
+        return 1;
+    }
+    static int ToString(lua_State* L)
+    {
+        T val = Eluna::CHECKVAL<T>(L, 1);
+        std::ostringstream ss;
+        ss << val;
+        Eluna::Push(L, ss.str());
+        return 1;
+    }
+    static int Pow(lua_State* L)
+    {
+        T val1 = Eluna::CHECKVAL<T>(L, 1);
+        T val2 = Eluna::CHECKVAL<T>(L, 2);
+        Eluna::Push(L, static_cast<T>(powl(static_cast<long double>(val1), static_cast<long double>(val2))));
+        return 1;
+    }
+};
 
 #endif
