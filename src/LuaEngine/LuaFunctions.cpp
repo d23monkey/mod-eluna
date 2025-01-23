@@ -1092,7 +1092,6 @@ ElunaRegister<Guild> GuildMethods[] =
     { "SendMessage", &LuaGuild::SendMessage },
     { "UpdateMemberData", &LuaGuild::UpdateMemberData },
     { "MassInviteToEvent", &LuaGuild::MassInviteToEvent },
-    { "MassInviteToEvent", &LuaGuild::MassInviteToEvent },
     { "SwapItems", &LuaGuild::SwapItems },
     { "SwapItemsWithInventory", &LuaGuild::SwapItemsWithInventory },
     { "ResetTimes", &LuaGuild::ResetTimes },
