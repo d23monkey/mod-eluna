@@ -32,7 +32,7 @@
 ***Built on the shoulders of giants***
 </div>
 
-mod-eluna is a fork of the original [Eluna](https://github.com/ElunaLuaEngine/Eluna) project. We extend our heartfelt gratitude to the Eluna TC team for their work.
+mod-eluna is a fork of the original [Eluna](https://github.com/ElunaLuaEngine/Eluna) project. We extend our heartfelt gratitude to the Eluna team for their work.
 
 > **Explore More:**
 > - [Original Github](https://github.com/ElunaLuaEngine/Eluna)
@@ -76,14 +76,27 @@ cmake ../ -DLUA_VERSION=luajit
 ```
 
 ## 📚 Eluna Documentation
+> [!WARNING]
+> Please note that some mod-eluna functions may not be available on Eluna and vice versa.
 - [Getting Started](https://github.com/ElunaLuaEngine/Eluna/blob/master/docs/USAGE.md)
 - [Eluna Features](https://github.com/ElunaLuaEngine/Eluna/blob/master/docs/IMPL_DETAILS.md)
+
+### AzerothCore
+- [mod-eluna API](https://www.azerothcore.org/eluna/)
 - [Hooks Documentation](https://github.com/azerothcore/mod-eluna/blob/master/src/LuaEngine/Hooks.h)
 
+### Others emulators (TC, MaNGOS, CMaNGOS etc.)
+- [Eluna API](https://elunaluaengine.github.io/index.html)
+- [Hooks Documentation](https://github.com/ElunaLuaEngine/Eluna/blob/master/hooks/Hooks.h)
+
 ## 🔗 Useful Links
-- [🎮 AzerothCore](http://www.azerothcore.org/)
 - [💻 Lua.org](http://www.lua.org/)
 - [📜 License](https://github.com/azerothcore/mod-eluna/blob/master/LICENSE)
+
+- [🎮 MaNGOS](https://www.getmangos.eu/)
+- [🎮 cMaNGOS](https://cmangos.net/)
+- [🎮 TrinityCore](https://www.trinitycore.org/)
+- [🎮 AzerothCore](http://www.azerothcore.org/)
 
 ## 🛠️ Community Additions
 
