@@ -50,5 +50,11 @@ namespace LuaAchievement
         Eluna::Push(L, achievement->name[locale]);
         return 1;
     }
+
+    ElunaRegister<AchievementEntry> AchievementMethods[] =
+    {
+        { "GetId", &LuaAchievement::GetId },
+        { "GetName", &LuaAchievement::GetName }
+    };
 };
 #endif

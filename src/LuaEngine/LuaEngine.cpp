@@ -45,7 +45,7 @@ bool Eluna::reload = false;
 bool Eluna::initialized = false;
 Eluna::LockType Eluna::lock;
 
-extern void RegisterFunctions(Eluna* E);
+extern void RegisterMethods(Eluna* E);
 
 void Eluna::Initialize()
 {
@@ -221,7 +221,7 @@ void Eluna::OpenLua()
     // open additional lua libraries
 
     // Register methods and functions
-    RegisterFunctions(this);
+    RegisterMethods(this);
 
     // Set lua require folder paths (scripts folder structure)
     lua_getglobal(L, "package");

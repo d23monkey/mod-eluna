@@ -353,5 +353,36 @@ namespace LuaGameObject
         go->SetRespawnTime(respawn);
         return 0;
     }
+
+    ElunaRegister<GameObject> GameObjectMethods[] =
+    {
+        // Getters
+        { "GetDisplayId", &LuaGameObject::GetDisplayId },
+        { "GetGoState", &LuaGameObject::GetGoState },
+        { "GetLootState", &LuaGameObject::GetLootState },
+        { "GetLootRecipient", &LuaGameObject::GetLootRecipient },
+        { "GetLootRecipientGroup", &LuaGameObject::GetLootRecipientGroup },
+        { "GetDBTableGUIDLow", &LuaGameObject::GetDBTableGUIDLow },
+
+        // Setters
+        { "SetGoState", &LuaGameObject::SetGoState },
+        { "SetLootState", &LuaGameObject::SetLootState },
+        { "SetRespawnTime", &LuaGameObject::SetRespawnTime },
+
+        // Boolean
+        { "IsTransport", &LuaGameObject::IsTransport },
+        // {"IsDestructible", &LuaGameObject::IsDestructible},    // :IsDestructible() - UNDOCUMENTED
+        { "IsActive", &LuaGameObject::IsActive },
+        { "HasQuest", &LuaGameObject::HasQuest },
+        { "IsSpawned", &LuaGameObject::IsSpawned },
+
+        // Other
+        { "RemoveFromWorld", &LuaGameObject::RemoveFromWorld },
+        { "UseDoorOrButton", &LuaGameObject::UseDoorOrButton },
+        { "Despawn", &LuaGameObject::Despawn },
+        { "Respawn", &LuaGameObject::Respawn },
+        { "SaveToDB", &LuaGameObject::SaveToDB },
+        { "AddLoot", &LuaGameObject::AddLoot }
+    };
 };
 #endif

@@ -192,5 +192,29 @@ namespace LuaSpell
         spell->finish();
         return 0;
     }
+
+    ElunaRegister<Spell> SpellMethods[] =
+    {
+        // Getters
+        { "GetCaster", &LuaSpell::GetCaster },
+        { "GetCastTime", &LuaSpell::GetCastTime },
+        { "GetEntry", &LuaSpell::GetEntry },
+        { "GetDuration", &LuaSpell::GetDuration },
+        { "GetPowerCost", &LuaSpell::GetPowerCost },
+        { "GetReagentCost", &LuaSpell::GetReagentCost },
+        { "GetTargetDest", &LuaSpell::GetTargetDest },
+        { "GetTarget", &LuaSpell::GetTarget },
+
+        // Setters
+        { "SetAutoRepeat", &LuaSpell::SetAutoRepeat },
+
+        // Boolean
+        { "IsAutoRepeat", &LuaSpell::IsAutoRepeat },
+
+        // Other
+        { "Cancel", &LuaSpell::Cancel },
+        { "Cast", &LuaSpell::Cast },
+        { "Finish", &LuaSpell::Finish }
+    };
 };
 #endif

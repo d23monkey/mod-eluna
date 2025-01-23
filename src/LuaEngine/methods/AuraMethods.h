@@ -165,5 +165,26 @@ namespace LuaAura
         Eluna::CHECKOBJ<ElunaObject>(L, 1)->Invalidate();
         return 0;
     }
+
+    ElunaRegister<Aura> AuraMethods[] =
+    {
+        // Getters
+        { "GetCaster", &LuaAura::GetCaster },
+        { "GetCasterGUID", &LuaAura::GetCasterGUID },
+        { "GetCasterLevel", &LuaAura::GetCasterLevel },
+        { "GetDuration", &LuaAura::GetDuration },
+        { "GetMaxDuration", &LuaAura::GetMaxDuration },
+        { "GetAuraId", &LuaAura::GetAuraId },
+        { "GetStackAmount", &LuaAura::GetStackAmount },
+        { "GetOwner", &LuaAura::GetOwner },
+
+        // Setters
+        { "SetDuration", &LuaAura::SetDuration },
+        { "SetMaxDuration", &LuaAura::SetMaxDuration },
+        { "SetStackAmount", &LuaAura::SetStackAmount },
+
+        // Other
+        { "Remove", &LuaAura::Remove }
+    };
 };
 #endif

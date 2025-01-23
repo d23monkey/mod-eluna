@@ -86,6 +86,22 @@ namespace LuaVehicle
         vehicle->RemovePassenger(passenger);
         return 0;
     }
+
+    
+    ElunaRegister<Vehicle> VehicleMethods[] =
+    {
+        // Getters
+        { "GetOwner", &LuaVehicle::GetOwner },
+        { "GetEntry", &LuaVehicle::GetEntry },
+        { "GetPassenger", &LuaVehicle::GetPassenger },
+
+        // Boolean
+        { "IsOnBoard", &LuaVehicle::IsOnBoard },
+
+        // Other
+        { "AddPassenger", &LuaVehicle::AddPassenger },
+        { "RemovePassenger", &LuaVehicle::RemovePassenger }
+    };
 }
 
 #endif // VEHICLEMETHODS_H

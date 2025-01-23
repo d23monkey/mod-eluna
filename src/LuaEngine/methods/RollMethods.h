@@ -207,6 +207,23 @@ namespace LuaRoll
         Eluna::Push(L, roll->rollVoteMask);
         return 1;
     }
+
+    ElunaRegister<Roll> RollMethods[] =
+    {
+        { "GetItemGUID", &LuaRoll::GetItemGUID },
+        { "GetItemId", &LuaRoll::GetItemId },
+        { "GetItemRandomPropId", &LuaRoll::GetItemRandomPropId },
+        { "GetItemRandomSuffix", &LuaRoll::GetItemRandomSuffix },
+        { "GetItemCount", &LuaRoll::GetItemCount },
+        { "GetPlayerVote", &LuaRoll::GetPlayerVote },
+        { "GetPlayerVoteGUIDs", &LuaRoll::GetPlayerVoteGUIDs },
+        { "GetTotalPlayersRolling", &LuaRoll::GetTotalPlayersRolling },
+        { "GetTotalNeed", &LuaRoll::GetTotalNeed },
+        { "GetTotalGreed", &LuaRoll::GetTotalGreed },
+        { "GetTotalPass", &LuaRoll::GetTotalPass },
+        { "GetItemSlot", &LuaRoll::GetItemSlot },
+        { "GetRollVoteMask", &LuaRoll::GetRollVoteMask }
+    };
 }
 
 #endif
