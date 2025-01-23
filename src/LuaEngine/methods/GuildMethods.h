@@ -291,7 +291,12 @@ namespace LuaGuild
     }
 
     /**
+     * Invites [Guild] members to events based on level and rank filters.
      * 
+     * @param Player player = who sends the invitation
+     * @param minLevel = the required min level
+     * @param maxLevel = the required max level
+     * @param minRank = the required min rank
      */
     int MassInviteToEvent(lua_State* L, Guild* guild)
     { 
@@ -374,6 +379,9 @@ namespace LuaGuild
         return 1;
     }
 
+    /**
+     * Resets the number of item withdraw in all tab's for all [Guild] members.
+     */
     int ResetTimes(lua_State* L, Guild* guild)
     { 
         guild->ResetTimes();
