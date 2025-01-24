@@ -266,6 +266,8 @@ public:
     {
         ElunaTemplate<T>::Push(luastate, ptr);
     }
+    
+    static std::string FormatQuery(lua_State* L, const char* query);
 
     bool ExecuteCall(int params, int res);
 
