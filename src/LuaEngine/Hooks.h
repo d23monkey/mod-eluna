@@ -376,7 +376,7 @@ namespace Hooks
         TICKET_EVENT_STATUS_UPDATE                      = 4,    // (event, player, ticket)
         TICKET_EVENT_ON_RESOLVE                         = 5,    // (event, player, ticket)
         TICKET_EVENT_COUNT
-    }
+    };
   
     enum SpellEvents
     {
