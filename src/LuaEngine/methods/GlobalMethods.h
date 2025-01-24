@@ -3200,5 +3200,18 @@ namespace LuaGlobalFunctions
 
         return 0;
     }
+
+    /**
+     * Get the [SpellInfo] for the specified [Spell] id
+     *
+     * @param uint32 spellId : the ID of the spell
+     * @return [SpellInfo] spellInfo
+     */
+    int GetSpellInfo(lua_State* L)
+    {
+        uint32 spellId = Eluna::CHECKVAL<uint32>(L, 1);
+        Eluna::Push(L, sSpellMgr->GetSpellInfo(spellId));
+        return 1;
+    }
 }
 #endif

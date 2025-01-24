@@ -122,6 +122,7 @@ luaL_Reg GlobalMethods[] =
     { "PrintError", &LuaGlobalFunctions::PrintError },
     { "PrintDebug", &LuaGlobalFunctions::PrintDebug },
     { "GetActiveGameEvents", &LuaGlobalFunctions::GetActiveGameEvents },
+    { "GetSpellInfo", &LuaGlobalFunctions::GetSpellInfo },
 
     // Boolean
     { "IsCompatibilityMode", &LuaGlobalFunctions::IsCompatibilityMode },
