@@ -3307,6 +3307,7 @@ namespace LuaGlobalFunctions
         Eluna::Push(L, at->target_Orientation);
 
         return 5;
+    }
       
     /**  
      * Returns the instance of the specified DBC (DatabaseClient) store.
