@@ -314,6 +314,7 @@ ElunaRegister<Unit> UnitMethods[] =
     // {"GetVehicle", &LuaUnit::GetVehicle},                           // :GetVehicle() - UNDOCUMENTED - Gets the Vehicle kit of the vehicle the unit is on
     { "GetMovementType", &LuaUnit::GetMovementType },
     { "GetAttackers", &LuaUnit::GetAttackers },
+    { "GetThreat", &LuaUnit::GetThreat },
 
     // Setters
     { "SetFaction", &LuaUnit::SetFaction },
@@ -447,6 +448,8 @@ ElunaRegister<Unit> UnitMethods[] =
     { "DealHeal", &LuaUnit::DealHeal },
     { "AddThreat", &LuaUnit::AddThreat },
     { "ModifyThreatPct", &LuaUnit::ModifyThreatPct },
+    { "ClearThreat", &LuaUnit::ClearThreat },
+    { "ResetAllThreat", &LuaUnit::ResetAllThreat },
 
     { NULL, NULL }
 };
