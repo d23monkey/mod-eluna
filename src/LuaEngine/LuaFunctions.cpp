@@ -1184,6 +1184,9 @@ ElunaRegister<Map> MapMethods[] =
     { "GetAreaId", &LuaMap::GetAreaId },
     { "GetHeight", &LuaMap::GetHeight },
     { "GetWorldObject", &LuaMap::GetWorldObject },
+    { "GetCreatures", &LuaMap::GetCreatures },
+    { "GetCreaturesByAreaId", &LuaMap::GetCreaturesByAreaId },
+
 
     // Setters
     { "SetWeather", &LuaMap::SetWeather },
