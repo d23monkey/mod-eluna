@@ -121,6 +121,8 @@ luaL_Reg GlobalMethods[] =
     { "PrintError", &LuaGlobalFunctions::PrintError },
     { "PrintDebug", &LuaGlobalFunctions::PrintDebug },
     { "GetActiveGameEvents", &LuaGlobalFunctions::GetActiveGameEvents },
+    { "GetGossipMenuOptionLocale", &LuaGlobalFunctions::GetGossipMenuOptionLocale },
+    { "GetMapEntrance", &LuaGlobalFunctions::GetMapEntrance },
 
     // Boolean
     { "IsCompatibilityMode", &LuaGlobalFunctions::IsCompatibilityMode },
