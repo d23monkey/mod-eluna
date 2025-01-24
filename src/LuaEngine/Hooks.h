@@ -87,6 +87,7 @@ namespace Hooks
         REGTYPE_MAP,
         REGTYPE_INSTANCE,
         REGTYPE_TICKET,
+        REGTYPE_SPELL,
         REGTYPE_COUNT
     };
 
@@ -375,6 +376,14 @@ namespace Hooks
         TICKET_EVENT_STATUS_UPDATE                      = 4,    // (event, player, ticket)
         TICKET_EVENT_ON_RESOLVE                         = 5,    // (event, player, ticket)
         TICKET_EVENT_COUNT
+    }
+  
+    enum SpellEvents
+    {
+        SPELL_EVENT_ON_PREPARE                          = 1, // (event, caster, spell)
+        SPELL_EVENT_ON_CAST                             = 2, // (event, caster, spell, skipCheck)
+        SPELL_EVENT_ON_CAST_CANCEL                      = 3, // (event, caster, spell, bySelf)
+        SPELL_EVENT_COUNT
     };
 };
 

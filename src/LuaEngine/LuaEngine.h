@@ -218,6 +218,7 @@ public:
     BindingMap< EntryKey<Hooks::InstanceEvents> >*   MapEventBindings;
     BindingMap< EntryKey<Hooks::InstanceEvents> >*   InstanceEventBindings;
     BindingMap< EventKey<Hooks::TicketEvents> >*     TicketEventBindings;
+    BindingMap< EntryKey<Hooks::SpellEvents> >*      SpellEventBindings;
 
     BindingMap< UniqueObjectKey<Hooks::CreatureEvents> >*  CreatureUniqueBindings;
 
@@ -258,11 +259,15 @@ public:
     static void Push(lua_State* luastate, Pet const* pet);
     static void Push(lua_State* luastate, TempSummon const* summon);
     static void Push(lua_State* luastate, ObjectGuid const guid);
+    static void Push(lua_State* luastate, GemPropertiesEntry const& gemProperties);
+    static void Push(lua_State* luastate, SpellEntry const& spell);
     template<typename T>
     static void Push(lua_State* luastate, T const* ptr)
     {
         ElunaTemplate<T>::Push(luastate, ptr);
     }
+    
+    static std::string FormatQuery(lua_State* L, const char* query);
 
     bool ExecuteCall(int params, int res);
 
@@ -423,7 +428,7 @@ public:
     bool OnChat(Player* pPlayer, uint32 type, uint32 lang, std::string& msg, Player* pReceiver);
     void OnEmote(Player* pPlayer, uint32 emote);
     void OnTextEmote(Player* pPlayer, uint32 textEmote, uint32 emoteNum, ObjectGuid guid);
-    void OnSpellCast(Player* pPlayer, Spell* pSpell, bool skipCheck);
+    void OnPlayerSpellCast(Player* pPlayer, Spell* pSpell, bool skipCheck);
     void OnLogin(Player* pPlayer);
     void OnLogout(Player* pPlayer);
     void OnCreate(Player* pPlayer);
@@ -529,6 +534,11 @@ public:
     void OnTicketClose(Player* player, GmTicket* ticket);
     void OnTicketStatusUpdate(Player* player, GmTicket* ticket);
     void OnTicketResolve(Player* player, GmTicket* ticket);
+  
+    /* Spell */
+    void OnSpellPrepare(Unit* caster, Spell* spell, SpellInfo const* spellInfo);
+    void OnSpellCast(Unit* caster, Spell* spell, SpellInfo const* spellInfo, bool skipCheck);
+    void OnSpellCastCancel(Unit* caster, Spell* spell, SpellInfo const* spellInfo, bool bySelf);
 };
 template<> Unit* Eluna::CHECKOBJ<Unit>(lua_State* L, int narg, bool error);
 template<> Object* Eluna::CHECKOBJ<Object>(lua_State* L, int narg, bool error);

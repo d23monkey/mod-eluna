@@ -8,12 +8,14 @@
 #define GLOBALMETHODS_H
 
 #include "BindingMap.h"
+#include "ElunaDBCRegistry.h"
 
 #include "BanMgr.h"
 #include "GameTime.h"
 #include "SharedDefines.h"
 #include "OutdoorPvPMgr.h"
 #include "../../../../src/server/scripts/OutdoorPvP/OutdoorPvPNA.h"
+
 
 enum BanMode
 {
@@ -1240,6 +1242,29 @@ namespace LuaGlobalFunctions
     }
 
     /**
+     * Registers a [Spell] event handler.
+     *
+     * <pre>
+     * enum SpellEvents
+     * {
+     *     SPELL_EVENT_ON_PREPARE                          = 1, // (event, caster, spell)
+     *     SPELL_EVENT_ON_CAST                             = 2, // (event, caster, spell, skipCheck)
+     *     SPELL_EVENT_ON_CAST_CANCEL                      = 3, // (event, caster, spell, bySelf)
+     *     SPELL_EVENT_COUNT
+     * };
+     * </pre>
+     *
+     * @param uint32 entry : [Spell] entry Id
+     * @param uint32 event : event ID, refer to SpellEvents above
+     * @param function function : function to register
+     * @param uint32 shots = 0 : the number of times the function will be called, 0 means "always call this function"
+     */
+    int RegisterSpellEvent(lua_State* L)
+    {
+        return RegisterEntryHelper(L, Hooks::REGTYPE_SPELL);
+    }
+
+    /**
      * Reloads the Lua engine.
      */
     int ReloadEluna(lua_State* /*L*/)
@@ -1335,6 +1360,10 @@ namespace LuaGlobalFunctions
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
 
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Eluna::FormatQuery(L, query).c_str();
+
         ElunaQuery result = WorldDatabase.Query(query);
         if (result)
             Eluna::Push(L, new ElunaQuery(result));
@@ -1383,6 +1412,11 @@ namespace LuaGlobalFunctions
     int WorldDBExecute(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Eluna::FormatQuery(L, query).c_str();
+
         WorldDatabase.Execute(query);
         return 0;
     }
@@ -1402,6 +1436,10 @@ namespace LuaGlobalFunctions
     int CharDBQuery(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Eluna::FormatQuery(L, query).c_str();
 
         QueryResult result = CharacterDatabase.Query(query);
         if (result)
@@ -1444,6 +1482,11 @@ namespace LuaGlobalFunctions
     int CharDBExecute(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Eluna::FormatQuery(L, query).c_str();
+
         CharacterDatabase.Execute(query);
         return 0;
     }
@@ -1463,6 +1506,10 @@ namespace LuaGlobalFunctions
     int AuthDBQuery(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Eluna::FormatQuery(L, query).c_str();
 
         QueryResult result = LoginDatabase.Query(query);
         if (result)
@@ -1505,6 +1552,11 @@ namespace LuaGlobalFunctions
     int AuthDBExecute(lua_State* L)
     {
         const char* query = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            query = Eluna::FormatQuery(L, query).c_str();
+            
         LoginDatabase.Execute(query);
         return 0;
     }
@@ -3145,6 +3197,40 @@ namespace LuaGlobalFunctions
     }
 
     /**
+     * Unbinds event handlers for either all of a [Spell]'s events, or one type of event.
+     *
+     * If `event_type` is `nil`, all the [Spell]'s event handlers are cleared.
+     *
+     * Otherwise, only event handlers for `event_type` are cleared.
+     *
+     *
+     * @proto (entry)
+     * @proto (entry, event_type)
+     * @param uint32 entry : the ID of a [Spell]s
+     * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterSpellEvent]
+     */
+    int ClearSpellEvents(lua_State* L)
+    {
+        typedef EntryKey<Hooks::SpellEvents> Key;
+
+        if (lua_isnoneornil(L, 2))
+        {
+            uint32 entry = Eluna::CHECKVAL<uint32>(L, 1);
+
+            Eluna* E = Eluna::GetEluna(L);
+            for (uint32 i = 1; i < Hooks::SPELL_EVENT_COUNT; ++i)
+                E->SpellEventBindings->Clear(Key((Hooks::SpellEvents)i, entry));
+        }
+        else
+        {
+            uint32 entry = Eluna::CHECKVAL<uint32>(L, 1);
+            uint32 event_type = Eluna::CHECKVAL<uint32>(L, 2);
+            Eluna::GetEluna(L)->SpellEventBindings->Clear(Key((Hooks::SpellEvents)event_type, entry));
+        }
+        return 0;
+    }
+
+    /**
      * Gets the faction which is the current owner of Halaa in Nagrand
      * 0 = Alliance
      * 1 = Horde
@@ -3193,6 +3279,38 @@ namespace LuaGlobalFunctions
         }
 
         return 0;
+    }
+
+    /**
+     * Returns the instance of the specified DBC (DatabaseClient) store.
+     *
+     * This function retrieves the DBC store associated with the provided name 
+     * and pushes it onto the Lua stack.
+     *
+     * @param const char* dbcName : The name of the DBC store to retrieve.
+     * @param uint32 id : The ID used to look up within the specified DBC store.
+     *
+     * @return [DBCStore] store : The requested DBC store instance.
+     */
+    int LookupEntry(lua_State* L)
+    {
+        const char* dbcName = Eluna::CHECKVAL<const char*>(L, 1);
+        uint32 id = Eluna::CHECKVAL<uint32>(L, 2);
+
+        for (const auto& dbc : dbcRegistry)
+        {
+            if (dbc.name == dbcName)
+            {
+                const void* entry = dbc.lookupFunction(id);
+                if (!entry)
+                    return 0;
+
+                dbc.pushFunction(L, entry);
+                return 1;
+            }
+        }
+
+        return luaL_error(L, "Invalid DBC name: %s", dbcName);
     }
 }
 #endif

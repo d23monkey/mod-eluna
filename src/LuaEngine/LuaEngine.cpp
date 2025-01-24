@@ -160,6 +160,7 @@ PlayerGossipBindings(NULL),
 MapEventBindings(NULL),
 InstanceEventBindings(NULL),
 TicketEventBindings(NULL),
+SpellEventBindings(NULL),
 
 CreatureUniqueBindings(NULL)
 {
@@ -255,6 +256,7 @@ void Eluna::CreateBindStores()
     PlayerGossipBindings     = new BindingMap< EntryKey<Hooks::GossipEvents> >(L);
     MapEventBindings         = new BindingMap< EntryKey<Hooks::InstanceEvents> >(L);
     InstanceEventBindings    = new BindingMap< EntryKey<Hooks::InstanceEvents> >(L);
+    SpellEventBindings       = new BindingMap< EntryKey<Hooks::SpellEvents> >(L);
 
     CreatureUniqueBindings   = new BindingMap< UniqueObjectKey<Hooks::CreatureEvents> >(L);
 }
@@ -278,6 +280,7 @@ void Eluna::DestroyBindStores()
     delete BGEventBindings;
     delete MapEventBindings;
     delete InstanceEventBindings;
+    delete SpellEventBindings;
 
     delete CreatureUniqueBindings;
 
@@ -298,6 +301,7 @@ void Eluna::DestroyBindStores()
     BGEventBindings = NULL;
     MapEventBindings = NULL;
     InstanceEventBindings = NULL;
+    SpellEventBindings = NULL;
 
     CreatureUniqueBindings = NULL;
 }
@@ -690,6 +694,58 @@ void Eluna::Push(lua_State* luastate, Object const* obj)
 void Eluna::Push(lua_State* luastate, ObjectGuid const guid)
 {
     ElunaTemplate<unsigned long long>::Push(luastate, new unsigned long long(guid.GetRawValue()));
+}
+
+void Eluna::Push(lua_State* luastate, GemPropertiesEntry const& gemProperties)
+{
+    Push(luastate, &gemProperties);
+}
+
+void Eluna::Push(lua_State* luastate, SpellEntry const& spell)
+{
+    Push(luastate, &spell);
+}
+
+std::string Eluna::FormatQuery(lua_State* L, const char* query)
+{
+    int numArgs = lua_gettop(L);
+    std::string formattedQuery = query;
+
+    size_t position = 0;
+    for (int i = 2; i <= numArgs; ++i) 
+    {
+        std::string arg;
+
+        if (lua_isnumber(L, i)) 
+        {
+            arg = std::to_string(lua_tonumber(L, i));
+        } 
+        else if (lua_isstring(L, i)) 
+        {
+            std::string value = lua_tostring(L, i);
+            for (size_t pos = 0; (pos = value.find('\'', pos)) != std::string::npos; pos += 2)
+            {
+                value.insert(pos, "'");
+            }
+            arg = "'" + value + "'";
+        } 
+        else 
+        {
+            luaL_error(L, "Unsupported argument type. Only numbers and strings are supported.");
+            return "";
+        }
+
+        position = formattedQuery.find("?", position);
+        if (position == std::string::npos) 
+        {
+            luaL_error(L, "Mismatch between placeholders and arguments.");
+            return "";
+        }
+        formattedQuery.replace(position, 1, arg);
+        position += arg.length();
+    }
+
+    return formattedQuery;
 }
 
 static int CheckIntegerRange(lua_State* luastate, int narg, int min, int max)
@@ -1110,12 +1166,28 @@ int Eluna::Register(lua_State* L, uint8 regtype, uint32 entry, ObjectGuid guid, 
                 return 1; // Stack: callback
             }
             break;
-        case Hooks::REGTYPE_TICKET:
+      case Hooks::REGTYPE_TICKET:
             if (event_id < Hooks::TICKET_EVENT_COUNT)
             {
                 auto key = EventKey<Hooks::TicketEvents>((Hooks::TicketEvents)event_id);
                 bindingID = TicketEventBindings->Insert(key, functionRef, shots);
                 createCancelCallback(L, bindingID, TicketEventBindings);
+                return 1; // Stack: callback
+            }
+            break;
+        case Hooks::REGTYPE_SPELL:
+            if (event_id < Hooks::SPELL_EVENT_COUNT)
+            {
+                if (!sSpellMgr->GetSpellInfo(entry))
+                {
+                    luaL_unref(L, LUA_REGISTRYINDEX, functionRef);
+                    luaL_error(L, "Couldn't find a spell with (ID: %d)!", entry);
+                    return 0; // Stack: (empty)
+                }
+
+                auto key = EntryKey<Hooks::SpellEvents>((Hooks::SpellEvents)event_id, entry);
+                bindingID = SpellEventBindings->Insert(key, functionRef, shots);
+                createCancelCallback(L, bindingID, SpellEventBindings);
                 return 1; // Stack: callback
             }
             break;
