@@ -129,7 +129,7 @@ AuthDBQueryAsync
 ```
 </details>
 
-> For a complete list of community contributions, check our [Community Updates](https://github.com/azerothcore/mod-eluna/blob/master/COMMUNITY_UPDATES).
+> For a complete list of community contributions, check our [Community Updates](https://github.com/azerothcore/mod-eluna/blob/master/COMMUNITY_UPDATES.md).
 
 ## 🤝 Contributing
 
