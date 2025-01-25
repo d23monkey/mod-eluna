@@ -3276,7 +3276,7 @@ namespace LuaGlobalFunctions
 
         Eluna::Push(L, strOptionText);
         Eluna::Push(L, strBoxText);
-        return 2; // 2 values returned to Lua
+        return 2;
     }
 
     /**
