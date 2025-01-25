@@ -532,6 +532,7 @@ ElunaRegister<Player> PlayerMethods[] =
     { "GetShieldBlockValue", &LuaPlayer::GetShieldBlockValue },
     { "GetPlayerSettingValue", &LuaPlayer::GetPlayerSettingValue },
     { "GetTrader", &LuaPlayer::GetTrader },
+    { "GetBonusTalentCount", &LuaPlayer::GetBonusTalentCount },
 
     // Setters
     { "AdvanceSkillsToMax", &LuaPlayer::AdvanceSkillsToMax },
@@ -565,6 +566,9 @@ ElunaRegister<Player> PlayerMethods[] =
     { "SetPlayerLock", &LuaPlayer::SetPlayerLock },
     { "SetGender", &LuaPlayer::SetGender },
     { "SetSheath", &LuaPlayer::SetSheath },
+    { "SetBonusTalentCount", &LuaPlayer::SetBonusTalentCount },
+    { "AddBonusTalent", &LuaPlayer::AddBonusTalent },
+    { "RemoveBonusTalent", &LuaPlayer::RemoveBonusTalent },
 
     // Boolean
     { "HasTankSpec", &LuaPlayer::HasTankSpec },

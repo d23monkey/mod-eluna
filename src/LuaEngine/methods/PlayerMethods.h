@@ -3913,5 +3913,55 @@ namespace LuaPlayer
     player->RemovePet(player->GetPet(), (PetSaveMode)mode, returnreagent);
     return 0;
     }*/
+
+    /**
+     * Set bonus talent count to a specific count for the [Player]
+     *
+     * @param uint32 value : bonus talent points
+     */
+    int SetBonusTalentCount(lua_State* L, Player* player)
+    {
+        uint32 value  = Eluna::CHECKVAL<uint32>(L, 2);
+
+        player->SetBonusTalentCount(value);
+        return 0;
+    }
+
+    /**
+     * Get bonus talents count from the [Player]
+     *
+     * @return uint32 bonusTalent
+     */
+    int GetBonusTalentCount(lua_State* L, Player* player)
+    {
+        Eluna::Push(L, player->GetBonusTalentCount());
+        return 1;
+    }
+
+    /**
+     * Add bonus talents count to the [Player]
+     *
+     * @param uint32 count = count of bonus talent
+     */
+    int AddBonusTalent(lua_State* L, Player* player)
+    {
+        uint32 count  = Eluna::CHECKVAL<uint32>(L, 2);
+
+        player->AddBonusTalent(count);
+        return 0;
+    }
+
+    /**
+     * Remove bonus talents count to the [Player]
+     *
+     * @param uint32 count = count of bonus talent
+     */
+    int RemoveBonusTalent(lua_State* L, Player* player)
+    {
+        uint32 count  = Eluna::CHECKVAL<uint32>(L, 2);
+
+        player->RemoveBonusTalent(count);
+        return 0;
+    }
 };
 #endif
