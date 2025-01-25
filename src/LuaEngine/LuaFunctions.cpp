@@ -957,6 +957,7 @@ ElunaRegister<ItemTemplate> ItemTemplateMethods[] =
     { "GetAllowableRace", &LuaItemTemplate::GetAllowableRace },
     { "GetItemLevel", &LuaItemTemplate::GetItemLevel },
     { "GetRequiredLevel", &LuaItemTemplate::GetRequiredLevel },
+    { "GetIcon", &LuaItemTemplate::GetIcon },
     { NULL, NULL }
 };
 
