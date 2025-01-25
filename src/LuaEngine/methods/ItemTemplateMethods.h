@@ -53,7 +53,7 @@ namespace LuaItemTemplate
      */
     int GetName(lua_State* L, ItemTemplate* itemTemplate)
     {
-        uint32 loc_idx = Forge::CHECKVAL<uint32>(L, 2, LocaleConstant::LOCALE_enUS);
+        uint32 loc_idx = Eluna::CHECKVAL<uint32>(L, 2, LocaleConstant::LOCALE_enUS);
 
         const ItemLocale* itemLocale = eObjectMgr->GetItemLocale(itemTemplate->ItemId);
         std::string name = itemTemplate->Name1;
@@ -61,7 +61,7 @@ namespace LuaItemTemplate
         if (itemLocale && !itemLocale->Name[loc_idx].empty())
             name = itemLocale->Name[loc_idx];
 
-        Forge::Push(L, name);
+        Eluna::Push(L, name);
         return 1;
     }
 
