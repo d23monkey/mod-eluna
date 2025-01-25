@@ -9,78 +9,143 @@
 
 namespace LuaSpellEntry
 {
+    /**
+     * Returns the ID of the [SpellEntry].
+     *
+     * @return uint32 id
+     */
     int GetId(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->Id);
         return 1;
     }
 
+    /**
+     * Returns the category ID for the [SpellEntry].
+     *
+     * @return uint32 categoryId
+     */
     int GetCategory(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->Category);
         return 1;
     }
 
+    /**
+     * Returns the dispel ID for the [SpellEntry].
+     *
+     * @return uint32 dispelId
+     */
     int GetDispel(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->Dispel);
         return 1;
     }
 
+    /**
+     * Returns the mechanic ID for the [SpellEntry].
+     *
+     * @return uint32 mechanicId
+     */
     int GetMechanic(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->Mechanic);
         return 1;
     }
 
+    /**
+     * Returns the attribute bitflags for the [SpellEntry].
+     *
+     * @return uint32 attribute : bitmask, but returned as uint32
+     */
     int GetAttributes(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->Attributes);
         return 1;
     }
 
+    /**
+     * Returns the attributeEx bitflags for the [SpellEntry].
+     *
+     * @return uint32 attributeEx : bitmask, but returned as uint32
+     */
     int GetAttributesEx(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->AttributesEx);
         return 1;
     }
 
+    /**
+     * Returns the attributeEx2 bitflags for the [SpellEntry].
+     *
+     * @return uint32 attributeEx2 : bitmask, but returned as uint32
+     */
     int GetAttributesEx2(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->AttributesEx2);
         return 1;
     }
 
+    /**
+     * Returns the attributeEx3 bitflags for the [SpellEntry].
+     *
+     * @return uint32 attributeEx3 : bitmask, but returned as uint32
+     */
     int GetAttributesEx3(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->AttributesEx3);
         return 1;
     }
 
+    /**
+     * Returns the attributeEx4 bitflags for the [SpellEntry].
+     *
+     * @return uint32 attributeEx4 : bitmask, but returned as uint32
+     */
     int GetAttributesEx4(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->AttributesEx4);
         return 1;
     }
 
+    /**
+     * Returns the attributeEx5 bitflags for the [SpellEntry].
+     *
+     * @return uint32 attributeEx5 : bitmask, but returned as uint32
+     */
     int GetAttributesEx5(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->AttributesEx5);
         return 1;
     }
 
+    /**
+     * Returns the attributeEx6 bitflags for the [SpellEntry].
+     *
+     * @return uint32 attributeEx6 : bitmask, but returned as uint32
+     */
     int GetAttributesEx6(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->AttributesEx6);
         return 1;
     }
 
+    /**
+     * Returns the attributeEx7 bitflags for the [SpellEntry].
+     *
+     * @return uint32 attributeEx7 : bitmask, but returned as uint32
+     */
     int GetAttributesEx7(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->AttributesEx7);
         return 1;
     }
 
+    /**
+     * Returns the stance bitflags for the [SpellEntry].
+     *
+     * @return uint32 stance : bitmask, but returned as uint32
+     */
     int GetStances(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->Stances);
@@ -93,12 +158,22 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns the target bitmasks for the [SpellEntry].
+     *
+     * @return uint32 target : bitmasks, but returned as uint32.
+     */
     int GetTargets(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->Targets);
         return 1;
     }
 
+    /**
+     * Returns the target creature type bitmasks for the [SpellEntry].
+     *
+     * @return uint32 targetCreatureType : bitmasks, but returned as uint32.
+     */
     int GetTargetCreatureType(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->TargetCreatureType);
@@ -171,6 +246,11 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns the recovery time for the [SpellEntry].
+     *
+     * @return uint32 recoveryTime
+     */
     int GetRecoveryTime(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->RecoveryTime);
@@ -219,36 +299,66 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns the max level for the [SpellEntry].
+     *
+     * @return uint32 maxLevel : the [SpellEntry] max level.
+     */
     int GetMaxLevel(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->MaxLevel);
         return 1;
     }
 
+    /**
+     * Returns the base level required for the [SpellEntry].
+     *
+     * @return uint32 baseLevel
+     */
     int GetBaseLevel(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->BaseLevel);
         return 1;
     }
 
+    /**
+     * Returns the spell level for the [SpellEntry].
+     *
+     * @return uint32 spellLevel
+     */
     int GetSpellLevel(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->SpellLevel);
         return 1;
     }
 
+    /**
+     * Returns the duration index for the [SpellEntry].
+     *
+     * @return uint32 durationIndex
+     */
     int GetDurationIndex(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->DurationIndex);
         return 1;
     }
 
+    /**
+     * Returns the power type ID for the [SpellEntry].
+     *
+     * @return uint32 powerTypeId
+     */
     int GetPowerType(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->PowerType);
         return 1;
     }
 
+    /**
+     * Returns the mana cost for the [SpellEntry].
+     *
+     * @return uint32 manaCost
+     */
     int GetManaCost(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->ManaCost);
@@ -613,6 +723,11 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns a table with all effect points per combo point of [SpellEntry]
+     *
+     * @return table effectPointsPerComboPoint : returns a table containing all the effect points per combo point values of [SpellEntry]
+     */
     int GetEffectPointsPerComboPoint(lua_State* L, SpellEntry* entry)
     {
         lua_newtable(L);
@@ -645,6 +760,11 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns a table with both spell visuals of [SpellEntry]
+     *
+     * @return table spellVisuals : returns a table containing both spellVisuals for [SpellEntry].
+     */
     int GetSpellVisual(lua_State* L, SpellEntry* entry)
     {
         lua_newtable(L);
@@ -661,12 +781,22 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns the spell icon ID for the [SpellEntry].
+     *
+     * @return uint32 spellIconId
+     */
     int GetSpellIconID(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->SpellIconID);
         return 1;
     }
 
+    /**
+     * Returns the active icon ID for the [SpellEntry].
+     *
+     * @return uint32 activeIconId
+     */
     int GetActiveIconID(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->ActiveIconID);
@@ -679,6 +809,11 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns a table of the [SpellEntry] names of all locals.
+     *
+     * @return table spellNames : returns a table containing all the name locals for the [SpellEntry]
+     */
     int GetSpellName(lua_State* L, SpellEntry* entry)
     {
         lua_newtable(L);
@@ -695,6 +830,11 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns a table of the [SpellEntry] ranks.
+     *
+     * @return table spellRanks : a table containing all the ranks of the spell.
+     */
     int GetRank(lua_State* L, SpellEntry* entry)
     {
         lua_newtable(L);
@@ -711,6 +851,11 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns the mana cost percentage of [SpellEntry].
+     *
+     * @return uint32 manaCostPercentage : the mana cost in percentage, returned as uint32.
+     */
     int GetManaCostPercentage(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->ManaCostPercentage);
@@ -765,6 +910,11 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns a table with all effect damage multiplier values [SpellEntry].
+     *
+     * @return table effectDamageMultipliers
+     */
     int GetEffectDamageMultiplier(lua_State* L, SpellEntry* entry)
     {
         lua_newtable(L);
@@ -781,6 +931,11 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns a table with totem categories IDs [SpellEntry].
+     *
+     * @return table totemCategory : returns a table with TotemCategory 1 and TotemCategory 2 Ids
+     */
     int GetTotemCategory(lua_State* L, SpellEntry* entry)
     {
         lua_newtable(L);
@@ -809,12 +964,22 @@ namespace LuaSpellEntry
         return 1;
     }
 
+    /**
+     * Returns the rune cost id for the [SpellEntry].
+     *
+     * @return uint32 runeCostId
+     */
     int GetRuneCostID(lua_State* L, SpellEntry* entry)
     {
         Eluna::Push(L, entry->RuneCostID);
         return 1;
     }
 
+    /**
+     * Returns a table with all effect bonus multiplier values [SpellEntry].
+     *
+     * @return table effectBonusMultipliers
+     */
     int GetEffectBonusMultiplier(lua_State* L, SpellEntry* entry)
     {
         lua_newtable(L);
