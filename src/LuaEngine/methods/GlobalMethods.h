@@ -3275,18 +3275,5 @@ namespace LuaGlobalFunctions
 
         return luaL_error(L, "Invalid DBC name: %s", dbcName);
     }
-
-    /**
-     * Sets the [SpellInfo] for the specified [Spell] id
-     *
-     * @param [uint32] spellId : the ID of the spell
-     * @return [SpellInfo] spellInfo
-     */
-    int GetSpellInfo(lua_State* L)
-    {
-        uint32 spellId = Eluna::CHECKVAL<uint32>(L, 1);
-        Eluna::Push(L, sSpellMgr->GetSpellInfo(spellId));
-        return 1;
-    }
 }
 #endif
