@@ -3257,6 +3257,11 @@ namespace LuaPlayer
     int SendBroadcastMessage(lua_State* L, Player* player)
     {
         const char* message = Eluna::CHECKVAL<const char*>(L, 2);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 2)
+            message = Eluna::FormatQuery(L, message).c_str();
+
         if (std::string(message).length() > 0)
             ChatHandler(player->GetSession()).SendSysMessage(message);
         return 0;
@@ -3270,6 +3275,11 @@ namespace LuaPlayer
     int SendAreaTriggerMessage(lua_State* L, Player* player)
     {
         std::string msg = Eluna::CHECKVAL<std::string>(L, 2);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 2)
+            msg = Eluna::FormatQuery(L, msg.c_str());
+
         if (msg.length() > 0)
             player->GetSession()->SendAreaTriggerMessage("{}", msg.c_str());
         return 0;

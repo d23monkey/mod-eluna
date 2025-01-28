@@ -29,6 +29,10 @@ namespace LuaChatHandler
         else
         {
             std::string text = Eluna::CHECKVAL<std::string>(L, 2);
+            int numArgs = lua_gettop(L);
+            if (numArgs > 2)
+                text = Eluna::FormatQuery(L, text.c_str());
+            
             handler->SendSysMessage(text);
         }
         return 0;
@@ -64,6 +68,11 @@ namespace LuaChatHandler
     int SendGlobalSysMessage(lua_State* L, ChatHandler* handler)
     {
         std::string text = Eluna::CHECKVAL<std::string>(L, 2);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 2)
+            text = Eluna::FormatQuery(L, text.c_str());
+
         handler->SendGlobalSysMessage(text.c_str());
         return 0;
     }
@@ -76,6 +85,11 @@ namespace LuaChatHandler
     int SendGlobalGMSysMessage(lua_State* L, ChatHandler* handler)
     {
         std::string text = Eluna::CHECKVAL<std::string>(L, 2);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 2)
+            text = Eluna::FormatQuery(L, text.c_str());
+
         handler->SendGlobalGMSysMessage(text.c_str());
         return 0;
     }

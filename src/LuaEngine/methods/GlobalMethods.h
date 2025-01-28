@@ -1276,6 +1276,11 @@ namespace LuaGlobalFunctions
     int SendWorldMessage(lua_State* L)
     {
         const char* message = Eluna::CHECKVAL<const char*>(L, 1);
+
+        int numArgs = lua_gettop(L);
+        if (numArgs > 1)
+            message = Eluna::FormatQuery(L, message).c_str();
+
         eWorld->SendServerMessage(SERVER_MSG_STRING, message);
         return 0;
     }
