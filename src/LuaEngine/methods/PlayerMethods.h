@@ -3945,7 +3945,7 @@ namespace LuaPlayer
      */
     int AddBonusTalent(lua_State* L, Player* player)
     {
-        uint32 count  = Eluna::CHECKVAL<uint32>(L, 2);
+        uint32 count = Eluna::CHECKVAL<uint32>(L, 2);
 
         player->AddBonusTalent(count);
         return 0;
