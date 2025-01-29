@@ -29,9 +29,9 @@ namespace LuaChatHandler
         else
         {
             std::string text = Eluna::CHECKVAL<std::string>(L, 2);
-            int numArgs = lua_gettop(L);
-            if (numArgs > 2)
-                text = Eluna::FormatQuery(L, text.c_str());
+
+            if (lua_gettop(L) > 2)
+                text = Eluna::FormatText(L, text, 3);
             
             handler->SendSysMessage(text);
         }
@@ -63,34 +63,40 @@ namespace LuaChatHandler
     /**
      * Sends a message to all connected players
      *
-     * @param string text : text to send
+     * @param string message
      */
     int SendGlobalSysMessage(lua_State* L, ChatHandler* handler)
     {
-        std::string text = Eluna::CHECKVAL<std::string>(L, 2);
+        std::string message = Eluna::CHECKVAL<std::string>(L, 2);
 
-        int numArgs = lua_gettop(L);
-        if (numArgs > 2)
-            text = Eluna::FormatQuery(L, text.c_str());
+        if (!message.empty())
+        {
+            if (lua_gettop(L) > 2)
+                message = Eluna::FormatText(L, message, 3);
 
-        handler->SendGlobalSysMessage(text.c_str());
+            handler->SendGlobalSysMessage(message.c_str());
+        }
+
         return 0;
     }
 
     /**
      * Sends a message to all connected Game Masters
      *
-     * @param string text : text to send
+     * @param string message
      */
     int SendGlobalGMSysMessage(lua_State* L, ChatHandler* handler)
     {
-        std::string text = Eluna::CHECKVAL<std::string>(L, 2);
+        std::string message = Eluna::CHECKVAL<std::string>(L, 2);
 
-        int numArgs = lua_gettop(L);
-        if (numArgs > 2)
-            text = Eluna::FormatQuery(L, text.c_str());
+        if (!message.empty())
+        {
+            if (lua_gettop(L) > 2)
+                message = Eluna::FormatText(L, message, 3);
 
-        handler->SendGlobalGMSysMessage(text.c_str());
+            handler->SendGlobalGMSysMessage(message.c_str());
+        }
+
         return 0;
     }
 
