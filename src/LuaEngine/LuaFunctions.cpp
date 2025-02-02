@@ -323,6 +323,7 @@ ElunaRegister<Unit> UnitMethods[] =
     // {"GetVehicle", &LuaUnit::GetVehicle},                           // :GetVehicle() - UNDOCUMENTED - Gets the Vehicle kit of the vehicle the unit is on
     { "GetMovementType", &LuaUnit::GetMovementType },
     { "GetAttackers", &LuaUnit::GetAttackers },
+    { "GetThreat", &LuaUnit::GetThreat },
 
     // Setters
     { "SetFaction", &LuaUnit::SetFaction },
@@ -456,6 +457,8 @@ ElunaRegister<Unit> UnitMethods[] =
     { "DealHeal", &LuaUnit::DealHeal },
     { "AddThreat", &LuaUnit::AddThreat },
     { "ModifyThreatPct", &LuaUnit::ModifyThreatPct },
+    { "ClearThreat", &LuaUnit::ClearThreat },
+    { "ResetAllThreat", &LuaUnit::ResetAllThreat },
 
     { NULL, NULL }
 };
@@ -569,6 +572,8 @@ ElunaRegister<Player> PlayerMethods[] =
     { "SetPlayerLock", &LuaPlayer::SetPlayerLock },
     { "SetGender", &LuaPlayer::SetGender },
     { "SetSheath", &LuaPlayer::SetSheath },
+    { "GetHomebind", &LuaPlayer::GetHomebind },
+    { "GetSpells", &LuaPlayer::GetSpells },
 
     // Boolean
     { "HasTankSpec", &LuaPlayer::HasTankSpec },
@@ -739,6 +744,7 @@ ElunaRegister<Player> PlayerMethods[] =
     { "SendCinematicStart", &LuaPlayer::SendCinematicStart },
     { "SendMovieStart", &LuaPlayer::SendMovieStart },
     { "UpdatePlayerSetting", &LuaPlayer::UpdatePlayerSetting },
+    { "TeleportTo", &LuaPlayer::TeleportTo },
 
     { NULL, NULL }
 };
