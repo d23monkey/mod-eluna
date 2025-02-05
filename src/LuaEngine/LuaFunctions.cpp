@@ -128,6 +128,8 @@ luaL_Reg GlobalMethods[] =
     { "PrintError", &LuaGlobalFunctions::PrintError },
     { "PrintDebug", &LuaGlobalFunctions::PrintDebug },
     { "GetActiveGameEvents", &LuaGlobalFunctions::GetActiveGameEvents },
+    { "GetGossipMenuOptionLocale", &LuaGlobalFunctions::GetGossipMenuOptionLocale },
+    { "GetMapEntrance", &LuaGlobalFunctions::GetMapEntrance },
     { "GetSpellInfo", &LuaGlobalFunctions::GetSpellInfo },
 
     // Boolean
@@ -968,6 +970,7 @@ ElunaRegister<ItemTemplate> ItemTemplateMethods[] =
     { "GetAllowableRace", &LuaItemTemplate::GetAllowableRace },
     { "GetItemLevel", &LuaItemTemplate::GetItemLevel },
     { "GetRequiredLevel", &LuaItemTemplate::GetRequiredLevel },
+    { "GetIcon", &LuaItemTemplate::GetIcon },
     { NULL, NULL }
 };
 
