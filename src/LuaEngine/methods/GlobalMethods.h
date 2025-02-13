@@ -282,7 +282,7 @@ namespace LuaGlobalFunctions
      */
     int GetPlayerCount(lua_State* L)
     {
-        Eluna::Push(L, eWorld->GetActiveSessionCount());
+        Eluna::Push(L, eWorldSessionMgr->GetActiveSessionCount());
         return 1;
     }
 
