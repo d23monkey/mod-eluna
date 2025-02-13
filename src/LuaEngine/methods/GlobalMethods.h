@@ -1278,7 +1278,7 @@ namespace LuaGlobalFunctions
     int SendWorldMessage(lua_State* L)
     {
         const char* message = Eluna::CHECKVAL<const char*>(L, 1);
-        eWorld->SendServerMessage(SERVER_MSG_STRING, message);
+        eWorldSessionMgr->SendServerMessage(SERVER_MSG_STRING, message);
         return 0;
     }
 
