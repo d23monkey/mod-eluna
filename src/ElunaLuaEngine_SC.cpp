@@ -618,7 +618,7 @@ public:
         sEluna->HandleGossipSelectOption(player, menu_id, sender, action, "");
     }
 
-    void OnPlayerGossipSelect(Player* player, uint32 menu_id, uint32 sender, uint32 action, const char* code) override
+    void OnPlayerGossipSelectCode(Player* player, uint32 menu_id, uint32 sender, uint32 action, const char* code) override
     {
         sEluna->HandleGossipSelectOption(player, menu_id, sender, action, code);
     }
