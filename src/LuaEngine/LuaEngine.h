@@ -454,6 +454,7 @@ public:
     bool OnCanPlayerUpdateSkill(Player* player, uint32 skill_id);
     void OnBeforePlayerUpdateSkill(Player* player, uint32 skill_id, uint32& value, uint32 max, uint32 step);
     void OnPlayerUpdateSkill(Player* player, uint32 skill_id, uint32 value, uint32 max, uint32 step, uint32 new_value);
+    bool CanPlayerResurrect(Player* player);
 
     /* Vehicle */
     void OnInstall(Vehicle* vehicle);

@@ -282,7 +282,7 @@ namespace LuaGlobalFunctions
      */
     int GetPlayerCount(lua_State* L)
     {
-        Eluna::Push(L, eWorld->GetActiveSessionCount());
+        Eluna::Push(L, eWorldSessionMgr->GetActiveSessionCount());
         return 1;
     }
 
@@ -716,6 +716,8 @@ namespace LuaGlobalFunctions
      *     PLAYER_EVENT_ON_CAN_GROUP_INVITE        =     55,       // (event, player, memberName) - Can return false to prevent inviting
      *     PLAYER_EVENT_ON_GROUP_ROLL_REWARD_ITEM  =     56,       // (event, player, item, count, voteType, roll)
      *     PLAYER_EVENT_ON_BG_DESERTION            =     57,       // (event, player, type)
+     *     PLAYER_EVENT_ON_PET_KILL                =     58,       // (event, player, killer)
+     *     PLAYER_EVENT_ON_CAN_RESURRECT           =     59,       // (event, player)
      * };
      * </pre>
      *
@@ -1276,7 +1278,7 @@ namespace LuaGlobalFunctions
     int SendWorldMessage(lua_State* L)
     {
         const char* message = Eluna::CHECKVAL<const char*>(L, 1);
-        eWorld->SendServerMessage(SERVER_MSG_STRING, message);
+        eWorldSessionMgr->SendServerMessage(SERVER_MSG_STRING, message);
         return 0;
     }
 
