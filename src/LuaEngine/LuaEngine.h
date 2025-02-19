@@ -534,11 +534,10 @@ public:
     void OnBGDestroy(BattleGround* bg, BattleGroundTypeId bgId, uint32 instanceId);
 
     /* Ticket */
-    void OnTicketCreate(Player* player, GmTicket* ticket);
-    void OnTicketUpdate(Player* player, GmTicket* ticket);
-    void OnTicketClose(Player* player, GmTicket* ticket);
-    void OnTicketStatusUpdate(Player* player, GmTicket* ticket);
-    void OnTicketResolve(Player* player, GmTicket* ticket);
+    void OnTicketCreate(GmTicket* ticket);
+    void OnTicketClose(GmTicket* ticket);
+    void OnTicketUpdateLastChange(GmTicket* ticket);
+    void OnTicketResolve(GmTicket* ticket);
   
     /* Spell */
     void OnSpellPrepare(Unit* caster, Spell* spell, SpellInfo const* spellInfo);

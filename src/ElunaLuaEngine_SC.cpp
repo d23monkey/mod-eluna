@@ -1018,24 +1018,24 @@ class Eluna_TicketScript : public TicketScript
 public:
     Eluna_TicketScript() : TicketScript("Eluna_TicketScript") { }
 
-    void OnTicketCreate(Player* player, GmTicket* ticket) override
+    void OnTicketCreate(GmTicket* ticket) override
     {
-        sEluna->OnTicketCreate(player, ticket);
+        sEluna->OnTicketCreate(ticket);
     }
 
-    void OnTicketUpdate(Player* player, GmTicket* ticket) override
+    void OnTicketUpdateLastChange(GmTicket* ticket) override
     {
-        sEluna->OnTicketUpdate(player, ticket);
+        sEluna->OnTicketUpdateLastChange(ticket);
     }
 
-    void OnTicketClose(Player* player, GmTicket* ticket) override
+    void OnTicketClose(GmTicket* ticket) override
     {
-        sEluna->OnTicketClose(player, ticket);
+        sEluna->OnTicketClose(ticket);
     }
 
-    void OnTicketResolve(Player* player, GmTicket* ticket) override
+    void OnTicketResolve(GmTicket* ticket) override
     {
-        sEluna->OnTicketResolve(player, ticket);
+        sEluna->OnTicketResolve(ticket);
     }
 };
 

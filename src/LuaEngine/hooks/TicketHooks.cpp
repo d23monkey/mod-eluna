@@ -29,42 +29,30 @@ using namespace Hooks;
         return;\
     LOCK_ELUNA
 
-void Eluna::OnTicketCreate(Player* player, GmTicket* ticket)
+void Eluna::OnTicketCreate(GmTicket* ticket)
 {
     START_HOOK(TICKET_EVENT_ON_CREATE);
-    Push(player);
     Push(ticket);
     CallAllFunctions(TicketEventBindings, key);
 }
 
-void Eluna::OnTicketUpdate(Player* player, GmTicket* ticket)
+void Eluna::OnTicketUpdateLastChange(GmTicket* ticket)
 {
-    START_HOOK(TICKET_EVENT_ON_UPDATE);
-    Push(player);
+    START_HOOK(TICKET_EVENT_UPDATE_LAST_CHANGE);
     Push(ticket);
     CallAllFunctions(TicketEventBindings, key);
 }
 
-void Eluna::OnTicketClose(Player* player, GmTicket* ticket)
+void Eluna::OnTicketClose(GmTicket* ticket)
 {
     START_HOOK(TICKET_EVENT_ON_CLOSE);
-    Push(player);
     Push(ticket);
     CallAllFunctions(TicketEventBindings, key);
 }
 
-void Eluna::OnTicketStatusUpdate(Player* player, GmTicket* ticket)
-{
-    START_HOOK(TICKET_EVENT_STATUS_UPDATE);
-    Push(player);
-    Push(ticket);
-    CallAllFunctions(TicketEventBindings, key);
-}
-
-void Eluna::OnTicketResolve(Player* player, GmTicket* ticket)
+void Eluna::OnTicketResolve(GmTicket* ticket)
 {
     START_HOOK(TICKET_EVENT_ON_RESOLVE);
-    Push(player);
     Push(ticket);
     CallAllFunctions(TicketEventBindings, key);
 }
