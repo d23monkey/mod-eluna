@@ -818,9 +818,9 @@ public:
         return sEluna->OnPlayerCanUpdateSkill(player, skill_id);
     }
 
-    void OnBeforePlayerUpdateSkill(Player* player, uint32 skill_id, uint32& value, uint32 max, uint32 step) override
+    void OnPlayerBeforeUpdateSkill(Player* player, uint32 skill_id, uint32& value, uint32 max, uint32 step) override
     {
-        sEluna->OnBeforePlayerUpdateSkill(player, skill_id, value, max, step);
+        sEluna->OnPlayerBeforeUpdateSkill(player, skill_id, value, max, step);
     }
 
     void OnPlayerUpdateSkill(Player* player, uint32 skill_id, uint32 value, uint32 max, uint32 step, uint32 new_value) override

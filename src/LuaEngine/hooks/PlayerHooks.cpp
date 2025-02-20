@@ -715,7 +715,7 @@ bool Eluna::OnPlayerCanUpdateSkill(Player* player, uint32 skill_id)
     return CallAllFunctionsBool(PlayerEventBindings, key);
 }
 
-void Eluna::OnBeforePlayerUpdateSkill(Player* player, uint32 skill_id, uint32& value, uint32 max, uint32 step)
+void Eluna::OnPlayerBeforeUpdateSkill(Player* player, uint32 skill_id, uint32& value, uint32 max, uint32 step)
 {
     START_HOOK(PLAYER_EVENT_ON_BEFORE_UPDATE_SKILL);
     Push(player);
