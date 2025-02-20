@@ -707,7 +707,7 @@ void Eluna::OnCreatureKilledByPet(Player* player, Creature* killed)
     CallAllFunctions(PlayerEventBindings, key);
 }
 
-bool Eluna::OnCanPlayerUpdateSkill(Player* player, uint32 skill_id)
+bool Eluna::OnPlayerCanUpdateSkill(Player* player, uint32 skill_id)
 {
     START_HOOK_WITH_RETVAL(PLAYER_EVENT_ON_CAN_UPDATE_SKILL, true);
     Push(player);
