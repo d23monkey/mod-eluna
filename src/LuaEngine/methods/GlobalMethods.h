@@ -282,7 +282,7 @@ namespace LuaGlobalFunctions
      */
     int GetPlayerCount(lua_State* L)
     {
-        Eluna::Push(L, eWorld->GetActiveSessionCount());
+        Eluna::Push(L, eWorldSessionMgr->GetActiveSessionCount());
         return 1;
     }
 
@@ -716,6 +716,8 @@ namespace LuaGlobalFunctions
      *     PLAYER_EVENT_ON_CAN_GROUP_INVITE        =     55,       // (event, player, memberName) - Can return false to prevent inviting
      *     PLAYER_EVENT_ON_GROUP_ROLL_REWARD_ITEM  =     56,       // (event, player, item, count, voteType, roll)
      *     PLAYER_EVENT_ON_BG_DESERTION            =     57,       // (event, player, type)
+     *     PLAYER_EVENT_ON_PET_KILL                =     58,       // (event, player, killer)
+     *     PLAYER_EVENT_ON_CAN_RESURRECT           =     59,       // (event, player)
      * };
      * </pre>
      *
@@ -1218,6 +1220,30 @@ namespace LuaGlobalFunctions
     }
 
     /**
+     * Registers a [Ticket] event handler.
+     *
+     * <pre>
+     * enum TicketEvents
+     * {
+     *     TICKET_EVENT_ON_CREATE                          = 1,    // (event, player, ticket)
+     *     TICKET_EVENT_ON_UPDATE                          = 2,    // (event, player, ticket, message)
+     *     TICKET_EVENT_ON_CLOSE                           = 3,    // (event, player, ticket)
+     *     TICKET_EVENT_STATUS_UPDATE                      = 4,    // (event, player, ticket)
+     *     TICKET_EVENT_ON_RESOLVE                         = 5,    // (event, player, ticket)
+     *     TICKET_EVENT_COUNT
+     * };
+     * </pre>
+     *
+     * @param uint32 event : event ID, refer to UnitEvents above
+     * @param function function : function to register
+     * @param uint32 shots = 0 : the number of times the function will be called, 0 means "always call this function"
+     */
+    int RegisterTicketEvent(lua_State* L)
+    {
+        return RegisterEventHelper(L, Hooks::REGTYPE_TICKET);
+    }
+
+    /**
      * Registers a [Spell] event handler.
      *
      * <pre>
@@ -1276,7 +1302,7 @@ namespace LuaGlobalFunctions
     int SendWorldMessage(lua_State* L)
     {
         const char* message = Eluna::CHECKVAL<const char*>(L, 1);
-        eWorld->SendServerMessage(SERVER_MSG_STRING, message);
+        eWorldSessionMgr->SendServerMessage(SERVER_MSG_STRING, message);
         return 0;
     }
 
@@ -3142,6 +3168,33 @@ namespace LuaGlobalFunctions
             Eluna::GetEluna(L)->InstanceEventBindings->Clear(Key((Hooks::InstanceEvents)event_type, entry));
         }
 
+        return 0;
+    }
+
+    /**
+     * Unbinds event handlers for either all [Ticket] events, or one type of [Ticket] event.
+     *
+     * If `event_type` is `nil`, all [Ticket] event handlers are cleared.
+     *
+     * Otherwise, only event handlers for `event_type` are cleared.
+     *
+     * @proto ()
+     * @proto (event_type)
+     * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterTicketEvent]
+     */
+    int ClearTicketEvents(lua_State* L)
+    {
+        typedef EventKey<Hooks::TicketEvents> Key;
+
+        if (lua_isnoneornil(L, 1))
+        {
+            Eluna::GetEluna(L)->TicketEventBindings->Clear();
+        }
+        else
+        {
+            uint32 event_type = Eluna::CHECKVAL<uint32>(L, 1);
+            Eluna::GetEluna(L)->TicketEventBindings->Clear(Key((Hooks::TicketEvents)event_type));
+        }
         return 0;
     }
 
