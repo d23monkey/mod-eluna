@@ -347,9 +347,9 @@ public:
 class Eluna_CommandSC : public CommandSC
 {
 public:
-    Eluna_CommandSC() : CommandSC("Eluna_CommandSC", 
+    Eluna_CommandSC() : CommandSC("Eluna_CommandSC", {
         ALLCOMMANDHOOK_ON_TRY_EXECUTE_COMMAND
-    ) { }
+    }) { }
 
     bool OnTryExecuteCommand(ChatHandler& handler, std::string_view cmdStr) override
     {
@@ -522,9 +522,9 @@ public:
 class Eluna_LootScript : public LootScript
 {
 public:
-    Eluna_LootScript() : LootScript("Eluna_LootScript", 
+    Eluna_LootScript() : LootScript("Eluna_LootScript", {
         LOOTHOOK_ON_LOOT_MONEY
-    ) { }
+    }) { }
 
     void OnLootMoney(Player* player, uint32 gold) override
     {
@@ -535,9 +535,9 @@ public:
 class Eluna_MiscScript : public MiscScript
 {
 public:
-    Eluna_MiscScript() : MiscScript("Eluna_MiscScript", 
+    Eluna_MiscScript() : MiscScript("Eluna_MiscScript", {
         MISCHOOK_GET_DIALOG_STATUS
-    ) { }
+    }) { }
 
     void GetDialogStatus(Player* player, Object* questgiver) override
     {
@@ -551,9 +551,9 @@ public:
 class Eluna_PetScript : public PetScript
 {
 public:
-    Eluna_PetScript() : PetScript("Eluna_PetScript", 
+    Eluna_PetScript() : PetScript("Eluna_PetScript", {
         PETHOOK_ON_PET_ADD_TO_WORLD
-    ) { }
+    }) { }
 
     void OnPetAddToWorld(Pet* pet) override
     {
@@ -1013,9 +1013,9 @@ public:
 class Eluna_UnitScript : public UnitScript
 {
 public:
-    Eluna_UnitScript() : UnitScript("Eluna_UnitScript", 
+    Eluna_UnitScript() : UnitScript("Eluna_UnitScript", {
         UNITHOOK_ON_UNIT_UPDATE
-    ) { }
+    }) { }
 
     void OnUnitUpdate(Unit* unit, uint32 diff) override
     {
