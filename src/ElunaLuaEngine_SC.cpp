@@ -1013,7 +1013,9 @@ public:
 class Eluna_UnitScript : public UnitScript
 {
 public:
-    Eluna_UnitScript() : UnitScript("Eluna_UnitScript", {UNITHOOK_ON_UNIT_UPDATE}) { }
+    Eluna_UnitScript() : UnitScript("Eluna_UnitScript", true, {
+        UNITHOOK_ON_UNIT_UPDATE
+    }) { }
 
     void OnUnitUpdate(Unit* unit, uint32 diff) override
     {
